@@ -1400,8 +1400,8 @@ function redzlib:SetScale(NewScale)
 	UIScale, ScreenGui.Scale.Scale = NewScale, NewScale
 end
 
-function redzlib:MakeWindow(WTitle, WMiniText)
-	Settings.ScriptFile = false
+function redzlib:New(WTitle, WMiniText, Save)
+	Settings.ScriptFile = Save or false
 	local function LoadFile()
 		local File = Settings.ScriptFile
 		if type(File) ~= "string" then return end
@@ -1735,7 +1735,7 @@ function redzlib:MakeWindow(WTitle, WMiniText)
 	end
 	
 	local ContainerList = {}
-	function Window:MakeTab(TName, TIcon)
+	function WindowTab(TName, TIcon)
 		TIcon = redzlib:GetIcon(TIcon)
 		if not TIcon:find("rbxassetid://") or TIcon:gsub("rbxassetid://", ""):len() < 6 then
 			TIcon = false
@@ -1894,7 +1894,7 @@ function redzlib:MakeWindow(WTitle, WMiniText)
 			end
 			return Paragraph
 		end
-		function Tab:AddButton(BName, b)
+		function Tab:Button(BName, b)
 			local Configs = {b}
 			local Callback = Funcs:GetCallback(Configs, 1)
 			local FButton, LabelFunc = ButtonFrame(Container, BName, "", UDim2.new(1, -20))
@@ -1924,7 +1924,7 @@ function redzlib:MakeWindow(WTitle, WMiniText)
 			end
 			return Button
 		end
-		function Tab:AddToggle(TName, Flag, Default, b)
+		function Tab:Toggle(TName, Flag, b)
 			local Configs = {b}
 			local Callback = Funcs:GetCallback(Configs, 1)
 			if CheckFlag(Flag) then Default = GetFlag(Flag) end
@@ -1988,7 +1988,7 @@ function redzlib:MakeWindow(WTitle, WMiniText)
 			end
 			return Toggle
 		end
-		function Tab:AddDropdown(DName, DOptions, OpDefault, Flag, b, DMultiSelect)
+		function Tab:Dropdown(DName, DOptions, OpDefault, Flag, b, DMultiSelect)
 			local Configs = {b}
 			local Callback = Funcs:GetCallback(Configs, 1)
 			local Button, LabelFunc = ButtonFrame(Container, DName, "", UDim2.new(1, -180))
@@ -2290,7 +2290,7 @@ function redzlib:MakeWindow(WTitle, WMiniText)
 			end
 			return Dropdown
 		end
-		function Tab:AddSlider(SName, Min, Max, Default, b)
+		function Tab:Slider(SName, Min, Max, Default, b)
 			local Configs = {b}
 			local Callback = Funcs:GetCallback(Configs, 1)
 			local Flag = Configs[7] or Configs.Flag or false
@@ -2396,7 +2396,7 @@ function redzlib:MakeWindow(WTitle, WMiniText)
 			function Slider:Destroy() Button:Destroy() end
 			return Slider
 		end
-		function Tab:AddTextBox(TName, TDefault, Hint, b)
+		function Tab:TextBox(TName, TDefault, Hint, b)
 			local Configs = {b}
 			local Callback = Funcs:GetCallback(Configs, 1)
 			if type(TDefault) ~= "string" or TDefault:gsub(" ", ""):len() < 1 then
@@ -2449,7 +2449,7 @@ function redzlib:MakeWindow(WTitle, WMiniText)
 			function TextBox:Destroy() Button:Destroy() end
 			return TextBox
 		end
-		function Tab:AddDiscordInvite(Configs)
+		function Tab:DiscordInvite(Configs)
 			local Title = Configs[1] or Configs.Name or Configs.Title or "Discord"
 			local Desc = Configs.Desc or Configs.Description or ""
 			local Logo = Configs[2] or Configs.Logo or ""
