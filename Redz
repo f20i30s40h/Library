@@ -1735,7 +1735,7 @@ function redzlib:New(WTitle, WMiniText, Save)
 	end
 	
 	local ContainerList = {}
-	function WindowTab(TName, TIcon)
+	function Window:Tab(TName, TIcon)
 		TIcon = redzlib:GetIcon(TIcon)
 		if not TIcon:find("rbxassetid://") or TIcon:gsub("rbxassetid://", ""):len() < 6 then
 			TIcon = false
