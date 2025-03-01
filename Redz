@@ -1964,7 +1964,9 @@ function redzlib:New(WTitle, WMiniText, Save)
 			end
 			return Button
 		end
-		function Tab:Toggle(TName, Flag, Callback)
+		function Tab:Toggle(TName, Default, Callback)
+		    local Configs = {}
+			local Flag = Configs[4] or Configs.Flag or false
 			if CheckFlag(Flag) then Default = GetFlag(Flag) end
 			local Button, LabelFunc = ButtonFrame(Container, TName, "idk", UDim2.new(1, -38))
 			local ToggleHolder = InsertTheme(Create("Frame", Button, {
@@ -2032,7 +2034,8 @@ function redzlib:New(WTitle, WMiniText, Save)
 			end
 			return Toggle
 		end
-		function Tab:AddDropdown(DName, DOptions, DMultiSelect, Callback)
+		function Tab:Dropdown(DName, DOptions, DMultiSelect, Callback)
+		    local Configs = {}
 			local OpDefault = Configs[3] or Configs.Default or {}
 			local Flag = Configs[5] or Configs.Flag or false
 			
@@ -2372,6 +2375,7 @@ function redzlib:New(WTitle, WMiniText, Save)
 			return Dropdown
 		end
 		function Tab:Slider(SName, Min, Max, Default, Callback)
+		    local Configs = {}
 			local Increase = Configs[4] or Configs.Increase or 1
 			local Flag = Configs[7] or Configs.Flag or false
 			if CheckFlag(Flag) then Default = GetFlag(Flag) end
@@ -2500,6 +2504,7 @@ function redzlib:New(WTitle, WMiniText, Save)
 			return Slider
 		end
 		function Tab:Textbox(TName, Callback)
+		    local Configs = {}
 			local TDefault = Configs[2] or Configs.Default or ""
 			local TPlaceholderText = Configs[5] or Configs.PlaceholderText or "Input"
 			local TClearText = Configs[3] or Configs.ClearText or false
