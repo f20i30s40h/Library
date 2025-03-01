@@ -1964,8 +1964,7 @@ function redzlib:New(WTitle, WMiniText, Save)
 			end
 			return Button
 		end
-		function Tab:Toggle(TName, Default, Callback)
-			local Flag = Configs[4] or Configs.Flag or false
+		function Tab:Toggle(TName, Flag, Callback)
 			if CheckFlag(Flag) then Default = GetFlag(Flag) end
 			local Button, LabelFunc = ButtonFrame(Container, TName, "idk", UDim2.new(1, -38))
 			local ToggleHolder = InsertTheme(Create("Frame", Button, {
