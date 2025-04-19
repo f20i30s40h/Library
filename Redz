@@ -1400,7 +1400,7 @@ function redzlib:SetScale(NewScale)
 	UIScale, ScreenGui.Scale.Scale = NewScale, NewScale
 end
 
-function redzlib:New(WTitle, WMiniText, Save)
+function redzlib:New(WTitle, WMiniText, Save, TT2)
 	Settings.ScriptFile = Save
 	local function LoadFile()
 		local File = Settings.ScriptFile
@@ -1936,7 +1936,7 @@ function redzlib:New(WTitle, WMiniText, Save)
 			return Paragraph
 		end
 		function Tab:Button(BName, Callback)
-			local FButton, LabelFunc = ButtonFrame(Container, BName, "idk", UDim2.new(1, -20))
+			local FButton, LabelFunc = ButtonFrame(Container, BName, (TT2 or ""), UDim2.new(1, -20))
 			local ButtonIcon = Create("ImageLabel", FButton, {
 				Size = UDim2.new(0, 14, 0, 14),
 				Position = UDim2.new(1, -10, 0.5),
@@ -1968,7 +1968,7 @@ function redzlib:New(WTitle, WMiniText, Save)
 		    local Configs = {}
 			local Flag = Configs[4] or Configs.Flag or false
 			if CheckFlag(Flag) then Default = GetFlag(Flag) end
-			local Button, LabelFunc = ButtonFrame(Container, TName, "idk", UDim2.new(1, -38))
+			local Button, LabelFunc = ButtonFrame(Container, TName, (TT2 or ""), UDim2.new(1, -38))
 			local ToggleHolder = InsertTheme(Create("Frame", Button, {
 				Size = UDim2.new(0, 35, 0, 18),
 				Position = UDim2.new(1, -10, 0.5),
@@ -2039,7 +2039,7 @@ function redzlib:New(WTitle, WMiniText, Save)
 			local OpDefault = Configs[3] or Configs.Default or {}
 			local Flag = Configs[5] or Configs.Flag or false
 			
-			local Button, LabelFunc = ButtonFrame(Container, DName, "idk", UDim2.new(1, -180))
+			local Button, LabelFunc = ButtonFrame(Container, DName, (TT2 or ""), UDim2.new(1, -180))
 			
 			local SelectedFrame = InsertTheme(Create("Frame", Button, {
 				Size = UDim2.new(0, 150, 0, 18),
@@ -2381,7 +2381,7 @@ function redzlib:New(WTitle, WMiniText, Save)
 			if CheckFlag(Flag) then Default = GetFlag(Flag) end
 			Min, Max = Min / Increase, Max / Increase
 			
-			local Button, LabelFunc = ButtonFrame(Container, SName, "idk", UDim2.new(1, -180))
+			local Button, LabelFunc = ButtonFrame(Container, SName, (TT2 or ""), UDim2.new(1, -180))
 			
 			local SliderHolder = Create("TextButton", Button, {
 				Size = UDim2.new(0.45, 0, 1),
@@ -2513,7 +2513,7 @@ function redzlib:New(WTitle, WMiniText, Save)
 				TDefault = false
 			end
 			
-			local Button, LabelFunc = ButtonFrame(Container, TName, "idk", UDim2.new(1, -38))
+			local Button, LabelFunc = ButtonFrame(Container, TName, (TT2 or ""), UDim2.new(1, -38))
 			
 			local SelectedFrame = InsertTheme(Create("Frame", Button, {
 				Size = UDim2.new(0, 150, 0, 18),
@@ -2615,7 +2615,7 @@ function redzlib:New(WTitle, WMiniText, Save)
 				TextXAlignment = "Left",
 				BackgroundTransparency = 1,
 				TextSize = 8,
-				Text = "idk"
+				Text = (TT2 or "")
 			}), "DarkText")
 			local JoinButton = Create("TextButton", FrameHolder, {
 				Size = UDim2.new(1, -14, 0, 16),
