@@ -2353,13 +2353,14 @@ function a.n()
 
   local e={}
 
-  function e.New(f,g)
+  function e.New(f, Title, Callback)
+    local g = {}
     local h={
       __type="Button",
-      Title=g.Title or"Button",
+      Title=Title or"Button",
       Desc=g.Desc or nil,
       Locked=g.Locked or false,
-      Callback=g.Callback or function()end,
+      Callback=Callback or function()end,
       UIElements={}
     }
     local i=true
@@ -2610,15 +2611,16 @@ function a.q()
   local f=a.load'o'.New
   local g=a.load'p'.New
   local h={}
-  function h.New(i,j)
+  function h.New(i, Title, Value, Callback)
+    local j = {}
     local k={
       __type="Toggle",
-      Title=j.Title or"Toggle",
+      Title=Title or"Toggle",
       Desc=j.Desc or nil,
-      Value=j.Value,
+      Value=Value,
       Icon=j.Icon or nil,
       Type=j.Type or"Toggle",
-      Callback=j.Callback or function()end,
+      Callback=Callback or function()end,
       UIElements={}
     }
     k.ToggleFrame=a.load'm'{
@@ -2683,15 +2685,16 @@ function a.q()
 
   local h=false
 
-  function g.New(i,j)
+  function g.New(i, Title, Min, Max, De, Callback)
+    local j = {}
     local k={
       __type="Slider",
-      Title=j.Title or"Slider",
+      Title=Title or"Slider",
       Desc=j.Desc or nil,
       Locked=j.Locked or nil,
-      Value=j.Value or{},
+      Value={Min = Min, Max = Max, Default = De},
       Step=j.Step or 1,
-      Callback=j.Callback or function()end,
+      Callback=Callback or function()end,
       UIElements={},
       IsFocusing=false,
     }
@@ -2877,14 +2880,15 @@ function a.q()
 
   local i=a.load'i'.New
 
-  function h.New(j,k)
+  function h.New(j, Title, Value, Callback)
+    local k = {}
     local n={
       __type="Keybind",
-      Title=k.Title or"Keybind",
+      Title=Title or"Keybind",
       Desc=k.Desc or nil,
       Locked=k.Locked or false,
-      Value=k.Value or"F",
-      Callback=k.Callback or function()end,
+      Value=Value or"F",
+      Callback=Callback or function()end,
       CanChange=k.CanChange or true,
       Picking=false,
       UIElements={},
@@ -2989,17 +2993,18 @@ function a.t()
   local h=a.load'c'
   .New
   local i=a.load'd'.New
-  function g.New(j,k)
+  function g.New(j, Title, Callback)
+    local k = {}
     local n={
       __type="Input",
-      Title=k.Title or"Input",
+      Title=Title or"Input",
       Desc=k.Desc or nil,
       Type=k.Type or"Input",
       Locked=k.Locked or false,
       InputIcon=k.InputIcon or false,
       Placeholder=k.Placeholder or"Enter Text...",
       Value=k.Value or"",
-      Callback=k.Callback or function()end,
+      Callback=Callback or function()end,
       ClearTextOnFocus=k.ClearTextOnFocus or false,
       UIElements={},
     }
@@ -3735,11 +3740,11 @@ function a.w()
   b.New
   local g=a.load'w'
   local h={}
-  function h.New(i,j)
+  function h.New(i, Title, Code)
     local k={
       __type="Code",
-      Title=j.Title,
-      Code=j.Code,
+      Title=Title,
+      Code=Code,
       UIElements={}
     }
 
@@ -4309,11 +4314,12 @@ function a.w()
   local ab=aa.New
   local ac=aa.Tween
   local b={}
-  function b.New(e,g)
+  function b.New(e, Title, Icon)
+    local g = {}
     local h={
       __type="Section",
-      Title=g.Title or"Section",
-      Icon=g.Icon,
+      Title=Title or"Section",
+      Icon=Icon,
       TextXAlignment=g.TextXAlignment or"Left",
       TextSize=g.TextSize or 19,
       UIElements={},
@@ -4402,12 +4408,13 @@ function a.A()
     i.TabHighlight=o
     return i
   end
-  function i.New(j)
+  function i.New(Title, Icon)
+    local j = {}
     local k={
       __type="Tab",
-      Title=j.Title or"Tab",
+      Title=Title or"Tab",
       Desc=j.Desc,
-      Icon=j.Icon,
+      Icon=Icon,
       IconThemed=j.IconThemed,
       Locked=j.Locked,
       ShowTabTitle=j.ShowTabTitle,
@@ -6151,8 +6158,8 @@ function a.E()
     if not n then
       n=not n
       o.WindUI:Notify{
-        Title="Minimize",
-        Content="You've closed the Window. "..K,
+        Title="AlienX",
+        Content="你隐藏了UI "..K,
         Icon="eye-off",
         Duration=5,
       }
