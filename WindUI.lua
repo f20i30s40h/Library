@@ -5925,7 +5925,7 @@ function a.E()
         Color = ColorSequence.new({ColorSequenceKeypoint.new(0.00, Color3.fromRGB(191, 0, 255)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 221, 255)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(10, 255, 0))}),
         Rotation = 15
       })
-    })
+    }),
     UIStroke,
     q,
     s,
