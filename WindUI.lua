@@ -2353,14 +2353,13 @@ function a.n()
 
   local e={}
 
-  function e.New(f, Title, Callback)
-    local g = {}
+  function e.New(f,g)
     local h={
       __type="Button",
-      Title=Title or"Button",
+      Title=g.Title or"Button",
       Desc=g.Desc or nil,
       Locked=g.Locked or false,
-      Callback=Callback or function()end,
+      Callback=g.Callback or function()end,
       UIElements={}
     }
     local i=true
@@ -2611,16 +2610,15 @@ function a.q()
   local f=a.load'o'.New
   local g=a.load'p'.New
   local h={}
-  function h.New(i, Title, Value, Callback)
-    local j = {}
+  function h.New(i,j)
     local k={
       __type="Toggle",
-      Title=Title or"Toggle",
+      Title=j.Title or"Toggle",
       Desc=j.Desc or nil,
-      Value=Value,
+      Value=j.Value,
       Icon=j.Icon or nil,
       Type=j.Type or"Toggle",
-      Callback=Callback or function()end,
+      Callback=j.Callback or function()end,
       UIElements={}
     }
     k.ToggleFrame=a.load'm'{
@@ -2685,16 +2683,15 @@ function a.q()
 
   local h=false
 
-  function g.New(i, Title, Min, Max, De, Callback)
-    local j = {}
+  function g.New(i,j)
     local k={
       __type="Slider",
-      Title=Title or"Slider",
+      Title=j.Title or"Slider",
       Desc=j.Desc or nil,
       Locked=j.Locked or nil,
-      Value={Min = Min, Max = Max, Default = De},
+      Value=j.Value or{},
       Step=j.Step or 1,
-      Callback=Callback or function()end,
+      Callback=j.Callback or function()end,
       UIElements={},
       IsFocusing=false,
     }
@@ -2880,15 +2877,14 @@ function a.q()
 
   local i=a.load'i'.New
 
-  function h.New(j, Title, Value, Callback)
-    local k = {}
+  function h.New(j,k)
     local n={
       __type="Keybind",
-      Title=Title or"Keybind",
+      Title=k.Title or"Keybind",
       Desc=k.Desc or nil,
       Locked=k.Locked or false,
-      Value=Value or"F",
-      Callback=Callback or function()end,
+      Value=k.Value or"F",
+      Callback=k.Callback or function()end,
       CanChange=k.CanChange or true,
       Picking=false,
       UIElements={},
@@ -2993,18 +2989,17 @@ function a.t()
   local h=a.load'c'
   .New
   local i=a.load'd'.New
-  function g.New(j, Title, Callback)
-    local k = {}
+  function g.New(j,k)
     local n={
       __type="Input",
-      Title=Title or"Input",
+      Title=k.Title or"Input",
       Desc=k.Desc or nil,
       Type=k.Type or"Input",
       Locked=k.Locked or false,
       InputIcon=k.InputIcon or false,
       Placeholder=k.Placeholder or"Enter Text...",
       Value=k.Value or"",
-      Callback=Callback or function()end,
+      Callback=k.Callback or function()end,
       ClearTextOnFocus=k.ClearTextOnFocus or false,
       UIElements={},
     }
@@ -3740,11 +3735,11 @@ function a.w()
   b.New
   local g=a.load'w'
   local h={}
-  function h.New(i, Title, Code)
+  function h.New(i,j)
     local k={
       __type="Code",
-      Title=Title,
-      Code=Code,
+      Title=j.Title,
+      Code=j.Code,
       UIElements={}
     }
 
@@ -4314,12 +4309,11 @@ function a.w()
   local ab=aa.New
   local ac=aa.Tween
   local b={}
-  function b.New(e, Title, Icon)
-    local g = {}
+  function b.New(e,g)
     local h={
       __type="Section",
-      Title=Title or"Section",
-      Icon=Icon,
+      Title=g.Title or"Section",
+      Icon=g.Icon,
       TextXAlignment=g.TextXAlignment or"Left",
       TextSize=g.TextSize or 19,
       UIElements={},
@@ -4408,13 +4402,12 @@ function a.A()
     i.TabHighlight=o
     return i
   end
-  function i.New(Title, Icon)
-    local j = {}
+  function i.New(j)
     local k={
       __type="Tab",
-      Title=Title or"Tab",
+      Title=j.Title or"Tab",
       Desc=j.Desc,
-      Icon=Icon,
+      Icon=j.Icon,
       IconThemed=j.IconThemed,
       Locked=j.Locked,
       ShowTabTitle=j.ShowTabTitle,
