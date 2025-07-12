@@ -6414,11 +6414,11 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       })
     })
   })
-  local UIS = Instance.new("UIStroke", p.UIElements.Main)
+  --[[local UIS = Instance.new("UIStroke", p.UIElements.Main)
   UIS.Thickness = 2
   UIS.Color = Color3.fromRGB(255, 255, 255)
   local UIG = Instance.new("UIGradient", UIS)
-  UIG.Color = ColorSequence.new({ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 60, 210)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(26, 220, 255))})
+  UIG.Color = ColorSequence.new({ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 60, 210)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(26, 220, 255))})]]
 
   function p.CreateTopbarButton(G,H,I,J,K,L)
     local M=b.Image(
