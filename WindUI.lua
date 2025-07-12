@@ -5917,6 +5917,15 @@ function a.E()
       E,
       r,
     }),
+    e("UIStroke", {
+      Thickness = 1,
+      Color = Color3.fromRGB(255, 255, 255)
+    },{
+      e("UIGradient", {
+        Color = ColorSequence.new({ColorSequenceKeypoint.new(0.00, Color3.fromRGB(191, 0, 255)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 221, 255)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(10, 255, 0))}),
+        Rotation = 15
+      })
+    })
     UIStroke,
     q,
     s,
@@ -6517,7 +6526,7 @@ p:CreateTopbarButton("Close","x",function()
     Content="关闭后无法打开AlienX-UI窗口需要重新加载脚本是否关闭",
     Buttons={
       {
-        Title="Cancel",
+        Title="取消",
         Callback=function()end,
         Variant="Secondary",
       },
