@@ -5922,7 +5922,7 @@ function a.E()
       Color = Color3.fromRGB(255, 255, 255)
     },{
       e("UIGradient", {
-        Color = ColorSequence.new({ColorSequenceKeypoint.new(0.00, Color3.fromRGB(191, 0, 255)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 221, 255)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(10, 255, 0))}),
+        Color = ColorSequence.new({ColorSequenceKeypoint.new(0.00, Color3.fromRGB(191, 0, 255)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 221, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(10, 255, 0))}),
         Rotation = 15
       })
     }),
