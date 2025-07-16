@@ -6190,7 +6190,7 @@ function a.E()
         ImageTransparency=o.Transparent and o.WindUI.TransparencyValue or 0,
       },Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
       g(p.UIElements.Main.Background,0.4,{
-        Size=UDim2.new(0.8,0,0.8,0),
+        Size=UDim2.new(1,0,1,0),
       },Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()
       g(p.UIElements.Main.Background.ImageLabel,0.2,{ImageTransparency=p.BackgroundImageTransparency},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
       g(v,0.25,{ImageTransparency=.7},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
