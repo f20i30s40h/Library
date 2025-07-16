@@ -6065,7 +6065,7 @@ function a.E()
     end)
     return N
   end
-  p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+  p.UIElements.Main:TweenSize(p.Size * 0.8, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
   local G=b.Drag(
   p.UIElements.Main,
   {p.UIElements.Main.Main.Topbar,E.Frame},
@@ -6210,7 +6210,7 @@ function a.E()
       p.CanDropdown=true
       p.UIElements.Main.Visible=true
       p.UIElements.Main.Main.Visible=true
-      p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+      p.UIElements.Main:TweenSize(p.Size * 0.8, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
       p.UIElements.Main.Main:TweenSize(UDim2.new(1, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
     end)
   end
