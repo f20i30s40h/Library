@@ -5891,6 +5891,7 @@ function a.E()
     Parent=o.Parent,
     AnchorPoint=Vector2.new(0.5,0.5),
     Active=true,
+    ClipsDescendants = false,
   },{
     v,
     b.NewRoundFrame(p.UICorner,"Squircle",{
@@ -5918,7 +5919,7 @@ function a.E()
       r,
     }),
     e("UIStroke", {
-      Thickness = 1.5,
+      Thickness = 1,
       Color = Color3.fromRGB(255, 255, 255)
     },{
       e("UIGradient", {
@@ -5936,6 +5937,9 @@ function a.E()
       Name="Main",
       Visible=false,
       ZIndex=97,
+      ClipsDescendants = true,
+      AnchorPoint=Vector2.new(0.5,0.5),
+      Position = UDim2.new(0.5, 0, 0.5, 0)
     },{
       e("UICorner",{
         CornerRadius=UDim.new(0,p.UICorner)
@@ -6061,7 +6065,7 @@ function a.E()
     end)
     return N
   end
-  p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+  p.UIElements.Main:TweenSize(UDim2.fromOffset(300, 270), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
   local G=b.Drag(
   p.UIElements.Main,
   {p.UIElements.Main.Main.Topbar,E.Frame},
@@ -6205,12 +6209,9 @@ function a.E()
       end)
       p.CanDropdown=true
       p.UIElements.Main.Visible=true
-      p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
-      task.spawn(function()
-        task.wait(.19)
-        p.UIElements.Main.Main.Visible=true
-        p.UIElements.Main.Main:TweenSize(UDim2.new(1, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
-      end)
+      p.UIElements.Main.Main.Visible=true
+      p.UIElements.Main:TweenSize(UDim2.fromOffset(300, 270), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+      p.UIElements.Main.Main:TweenSize(UDim2.new(1, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
     end)
   end
   function p.Close(K)
@@ -6220,9 +6221,9 @@ function a.E()
         b.SafeCallback(p.OnCloseCallback)
       end)
     end
-    p.UIElements.Main.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
-    wait(0.3)
-    p.UIElements.Main.Main.Visible=false
+    --p.UIElements.Main.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+    --wait(0.3)
+    --p.UIElements.Main.Main.Visible=false
     p.CanDropdown=false
     p.Closed=true
     g(p.UIElements.Main.Background,0.32,{
@@ -6241,9 +6242,11 @@ function a.E()
     G:Set(false)
     p.CanResize=false
     task.spawn(function()
-      task.wait(0.4)
+      --task.wait(0.4)
+      p.UIElements.Main.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
       p.UIElements.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
       wait(0.3)
+      p.UIElements.Main.Main.Visible=false
       p.UIElements.Main.Visible=false
     end)
     function L.Destroy(M)
