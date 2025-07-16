@@ -3014,7 +3014,7 @@ function a.t()
     local p=i(n.Placeholder,n.InputIcon,n.InputFrame.UIElements.Container,n.Type,function(p)
       n:Set(p)
     end)
-    p.Size=UDim2.new(1,0,0,n.Type=="Input"and 42 or 148)
+    p.Size=UDim2.new(0.85,0,0,(n.Type=="Input"and 42 or 148) * 0.85)
     e("UIScale",{
       Parent=p,
       Scale=1,
@@ -6065,7 +6065,7 @@ function a.E()
     end)
     return N
   end
-  p.UIElements.Main:TweenSize(p.Size * 0.8, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+  p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
   local G=b.Drag(
   p.UIElements.Main,
   {p.UIElements.Main.Main.Topbar,E.Frame},
@@ -6210,7 +6210,7 @@ function a.E()
       p.CanDropdown=true
       p.UIElements.Main.Visible=true
       p.UIElements.Main.Main.Visible=true
-      p.UIElements.Main:TweenSize(p.Size * 0.8, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+      p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
       p.UIElements.Main.Main:TweenSize(UDim2.new(1, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
     end)
   end
