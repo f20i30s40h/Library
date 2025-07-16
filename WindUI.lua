@@ -3014,7 +3014,8 @@ function a.t()
     local p=i(n.Placeholder,n.InputIcon,n.InputFrame.UIElements.Container,n.Type,function(p)
       n:Set(p)
     end)
-    p.Size=UDim2.new(0.85,0,0,(n.Type=="Input"and 42 or 148) * 0.85)
+    --p.Size=UDim2.new(0.8,0,0,n.Type=="Input"and 42 or 148)
+    p.Size=UDim2.new(0.8,0,0,n.Type=="Input"and 42 or 148)
     e("UIScale",{
       Parent=p,
       Scale=1,
