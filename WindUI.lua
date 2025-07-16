@@ -5936,9 +5936,6 @@ function a.E()
       Name="Main",
       Visible=false,
       ZIndex=97,
-      ClipsDescendants = true,
-      AnchorPoint=Vector2.new(0.5,0.5),
-      Position = UDim2.new(0.5, 0, 0.5, 0)
     },{
       e("UICorner",{
         CornerRadius=UDim.new(0,p.UICorner)
@@ -6208,9 +6205,12 @@ function a.E()
       end)
       p.CanDropdown=true
       p.UIElements.Main.Visible=true
-      p.UIElements.Main.Main.Visible=true
       p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
-      p.UIElements.Main.Main:TweenSize(UDim2.new(1, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+      task.spawn(function()
+        task.wait(.19)
+        p.UIElements.Main.Main.Visible=true
+        p.UIElements.Main.Main:TweenSize(UDim2.new(1, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+      end)
     end)
   end
   function p.Close(K)
@@ -6241,7 +6241,7 @@ function a.E()
     G:Set(false)
     p.CanResize=false
     task.spawn(function()
-      --task.wait(0.4)
+      task.wait(0.4)
       p.UIElements.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
       wait(0.3)
       p.UIElements.Main.Visible=false
