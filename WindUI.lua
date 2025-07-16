@@ -6065,7 +6065,7 @@ function a.E()
     end)
     return N
   end
-  p.UIElements.Main:TweenSize(UDim2.new(0, 400, 0, 270), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+  p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
   local G=b.Drag(
   p.UIElements.Main,
   {p.UIElements.Main.Main.Topbar,E.Frame},
@@ -6190,7 +6190,7 @@ function a.E()
         ImageTransparency=o.Transparent and o.WindUI.TransparencyValue or 0,
       },Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
       g(p.UIElements.Main.Background,0.4,{
-        Size=UDim2.new(1,0,1,0),
+        Size=UDim2.new(0.8,0,0.8,0),
       },Enum.EasingStyle.Exponential,Enum.EasingDirection.Out):Play()
       g(p.UIElements.Main.Background.ImageLabel,0.2,{ImageTransparency=p.BackgroundImageTransparency},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
       g(v,0.25,{ImageTransparency=.7},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
@@ -6210,7 +6210,7 @@ function a.E()
       p.CanDropdown=true
       p.UIElements.Main.Visible=true
       p.UIElements.Main.Main.Visible=true
-      p.UIElements.Main:TweenSize(UDim2.new(0, 400, 0, 270), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+      p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
       p.UIElements.Main.Main:TweenSize(UDim2.new(1, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
     end)
   end
@@ -6595,8 +6595,8 @@ b.AddSignal(aa.InputChanged,function(ad)
       local af=UDim2.new(0,initialSize.X.Offset+ae.X*2,0,initialSize.Y.Offset+ae.Y*2)
       g(p.UIElements.Main,0,{
         Size=UDim2.new(
-        0,math.clamp(af.X.Offset,480,700),
-        0,math.clamp(af.Y.Offset,350,520)
+        0,math.clamp(af.X.Offset,350,700),
+        0,math.clamp(af.Y.Offset,270,520)
         )}):Play()
     end
   end
