@@ -5936,6 +5936,9 @@ function a.E()
       Name="Main",
       Visible=false,
       ZIndex=97,
+      ClipsDescendants = true,
+      AnchorPoint=Vector2.new(0.5,0.5),
+      Position = UDim2.new(0.5, 0, 0.5, 0)
     },{
       e("UICorner",{
         CornerRadius=UDim.new(0,p.UICorner)
@@ -6217,6 +6220,9 @@ function a.E()
         b.SafeCallback(p.OnCloseCallback)
       end)
     end
+    p.UIElements.Main.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+    wait(0.3)
+    p.UIElements.Main.Main.Visible=false
     p.CanDropdown=false
     p.Closed=true
     g(p.UIElements.Main.Background,0.32,{
@@ -6235,10 +6241,9 @@ function a.E()
     G:Set(false)
     p.CanResize=false
     task.spawn(function()
-      p.UIElements.Main.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+      --task.wait(0.4)
       p.UIElements.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
       wait(0.3)
-      p.UIElements.Main.Main.Visible=false
       p.UIElements.Main.Visible=false
     end)
     function L.Destroy(M)
