@@ -6065,7 +6065,8 @@ function a.E()
     end)
     return N
   end
-  p.UIElements.Main:TweenSize(UDim2.new(0, 420, 0, 320), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+  p.Size = UDim2.new(0, 420, 0, 320)
+  p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
   local G=b.Drag(
   p.UIElements.Main,
   {p.UIElements.Main.Main.Topbar,E.Frame},
@@ -6210,7 +6211,7 @@ function a.E()
       p.CanDropdown=true
       p.UIElements.Main.Visible=true
       p.UIElements.Main.Main.Visible=true
-      p.UIElements.Main:TweenSize(UDim2.new(0, 420, 0, 320), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+      p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
       p.UIElements.Main.Main:TweenSize(UDim2.new(1, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
     end)
   end
@@ -6600,6 +6601,7 @@ b.AddSignal(aa.InputChanged,function(ad)
         )}):Play()
     end
   end
+  p.Size = p.UIElements.Main.Size
 end)
 if not p.HideSearchBar then
   local ad=a.load'D'
