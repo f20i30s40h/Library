@@ -5885,12 +5885,13 @@ function a.E()
     }
   })
   p.UIElements.Main=e("Frame",{
-    Size=p.Size,
+    Size=UDim2.new(0, 0, 0, 0),
     Position=p.Position,
     BackgroundTransparency=1,
     Parent=o.Parent,
     AnchorPoint=Vector2.new(0.5,0.5),
     Active=true,
+    ClipsDescendants = true,
   },{
     v,
     b.NewRoundFrame(p.UICorner,"Squircle",{
@@ -5918,12 +5919,12 @@ function a.E()
       r,
     }),
     e("UIStroke", {
-      Thickness = 1,
+      Thickness = 1.5,
       Color = Color3.fromRGB(255, 255, 255)
     },{
       e("UIGradient", {
         Color = ColorSequence.new({ColorSequenceKeypoint.new(0.00, Color3.fromRGB(191, 0, 255)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 221, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(10, 255, 0))}),
-        Rotation = 15
+        Rotation = 0
       })
     }),
     UIStroke,
@@ -5936,6 +5937,9 @@ function a.E()
       Name="Main",
       Visible=false,
       ZIndex=97,
+      ClipsDescendants = true,
+      AnchorPoint=Vector2.new(0.5,0.5),
+      Position = UDim2.new(0.5, 0, 0.5, 0)
     },{
       e("UICorner",{
         CornerRadius=UDim.new(0,p.UICorner)
@@ -6004,6 +6008,19 @@ function a.E()
       })
     })
   })
+  b.AddSignal(ab.RenderStepped, function()
+    local time = tick() * 1
+    p.UIElements.Main.UIStroke.UIGradient.Color=ColorSequence.new({
+      ColorSequenceKeypoint.new(0, Color3.fromHSV(time % 1, 1, 1)),
+      ColorSequenceKeypoint.new(1/6, Color3.fromHSV((time + 1/6) % 1, 1, 1)),
+      ColorSequenceKeypoint.new(2/6, Color3.fromHSV((time + 2/6) % 1, 1, 1)),
+      ColorSequenceKeypoint.new(3/6, Color3.fromHSV((time + 3/6) % 1, 1, 1)),
+      ColorSequenceKeypoint.new(4/6, Color3.fromHSV((time + 4/6) % 1, 1, 1)),
+      ColorSequenceKeypoint.new(5/6, Color3.fromHSV((time + 5/6) % 1, 1, 1)),
+      ColorSequenceKeypoint.new(1, Color3.fromHSV((time + 6/6) % 1, 1, 1))
+    })
+    p.UIElements.Main.UIStroke.UIGradient.Rotation=(p.UIElements.Main.UIStroke.UIGradient.Rotation+1)%360
+  end)
   function p.CreateTopbarButton(G,H,I,J,K,L)
     local M=b.Image(
     I,
@@ -6048,6 +6065,7 @@ function a.E()
     end)
     return N
   end
+  p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
   local G=b.Drag(
   p.UIElements.Main,
   {p.UIElements.Main.Main.Topbar,E.Frame},
@@ -6144,15 +6162,15 @@ function a.E()
         x.Visible=true
       end
     end)
-    local K=w and"Press "..p.ToggleKey.Name.." to open the Window"or"Click the Button to open the Window"
+    local K=w and"Press "..p.ToggleKey.Name.."打开窗口"or"点击按钮打开窗口"
     if not p.IsOpenButtonEnabled then
       n=true
     end
     if not n then
       n=not n
       o.WindUI:Notify{
-        Title="AlienX",
-        Content="你隐藏了UI "..K,
+        Title="最小化",
+        Content="你已隐藏窗口"..K,
         Icon="eye-off",
         Duration=5,
       }
@@ -6191,10 +6209,9 @@ function a.E()
       end)
       p.CanDropdown=true
       p.UIElements.Main.Visible=true
-      task.spawn(function()
-        task.wait(.19)
-        p.UIElements.Main.Main.Visible=true
-      end)
+      p.UIElements.Main.Main.Visible=true
+      p.UIElements.Main:TweenSize(p.Size, Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+      p.UIElements.Main.Main:TweenSize(UDim2.new(1, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
     end)
   end
   function p.Close(K)
@@ -6204,6 +6221,8 @@ function a.E()
         b.SafeCallback(p.OnCloseCallback)
       end)
     end
+    p.UIElements.Main.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+    wait(0.3)
     p.UIElements.Main.Main.Visible=false
     p.CanDropdown=false
     p.Closed=true
@@ -6224,6 +6243,8 @@ function a.E()
     p.CanResize=false
     task.spawn(function()
       task.wait(0.4)
+      p.UIElements.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+      wait(0.3)
       p.UIElements.Main.Visible=false
     end)
     function L.Destroy(M)
