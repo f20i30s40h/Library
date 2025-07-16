@@ -1161,6 +1161,10 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       Size=f.Size,
       Parent=g,
       BackgroundTransparency=1,
+
+
+
+
     },{
       d("UIListLayout",{
         HorizontalAlignment="Center",
@@ -1206,8 +1210,31 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       Transparency=1,
       Thickness=.6,
     })
+
     local k
+
     if h.Icon then
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       k=b.Image(
       h.Icon,
       h.Title..":"..h.Icon,
@@ -1410,7 +1437,11 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
 
     j.UIElements.Main.AutomaticSize="Y"
     j.UIElements.Main.Size=UDim2.new(0,n,0,0)
+
+
+
     local o
+
     if h.Icon then
       o=d.Image(
       h.Icon,
@@ -1454,6 +1485,11 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
       Size=UDim2.new(1,0,0,0),
       BackgroundTransparency=1,
     },{
+
+
+
+
+
       q,
     })
 
@@ -5883,7 +5919,7 @@ function a.E()
       r,
     }),
     e("UIStroke", {
-      Thickness = 1.1,
+      Thickness = 1,
       Color = Color3.fromRGB(255, 255, 255)
     },{
       e("UIGradient", {
