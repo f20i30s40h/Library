@@ -5891,7 +5891,7 @@ function a.E()
     Parent=o.Parent,
     AnchorPoint=Vector2.new(0.5,0.5),
     Active=true,
-    ClipsDescendants = true,
+    ClipsDescendants = false,
   },{
     v,
     b.NewRoundFrame(p.UICorner,"Squircle",{
@@ -5919,7 +5919,7 @@ function a.E()
       r,
     }),
     e("UIStroke", {
-      Thickness = 1.5,
+      Thickness = 1,
       Color = Color3.fromRGB(255, 255, 255)
     },{
       e("UIGradient", {
@@ -6221,9 +6221,9 @@ function a.E()
         b.SafeCallback(p.OnCloseCallback)
       end)
     end
-    p.UIElements.Main.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
-    wait(0.3)
-    p.UIElements.Main.Main.Visible=false
+    --p.UIElements.Main.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
+    --wait(0.3)
+    --p.UIElements.Main.Main.Visible=false
     p.CanDropdown=false
     p.Closed=true
     g(p.UIElements.Main.Background,0.32,{
@@ -6243,8 +6243,10 @@ function a.E()
     p.CanResize=false
     task.spawn(function()
       --task.wait(0.4)
+      p.UIElements.Main.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
       p.UIElements.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
       wait(0.3)
+      p.UIElements.Main.Main.Visible=false
       p.UIElements.Main.Visible=false
     end)
     function L.Destroy(M)
