@@ -6254,6 +6254,8 @@ function a.E()
     p.CanResize=false
     task.spawn(function()
       --task.wait(0.4)
+      p.Size = p.UIElements.Main.Size
+      task.wait(.15)
       p.UIElements.Main.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
       p.UIElements.Main:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 0.5, true)
       wait(0.3)
@@ -6619,6 +6621,7 @@ b.AddSignal(aa.InputChanged,function(ad)
     end
   end
   p.Size = p.UIElements.Main.Size
+  task.wait(.15)
 end)
 if not p.HideSearchBar then
   local ad=a.load'D'
