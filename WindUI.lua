@@ -5884,6 +5884,16 @@ function a.E()
       TextColor3="Text"
     }
   })
+  p.UIElements.XFC=e("ImageButton", {
+    Name = "OpenButton",
+    Parent = o.Parent,
+    Draggable = true,
+    Image = "rbxassetid://17798068909",
+    BackgroundTransparency = 1,
+    AnchorPoint = Vector2.new(0, 0.5),
+    Position = UDim2.new(0, 0, 0.45, 0),
+    Size = UDim2.new(0, 50, 0, 50)
+  })
   p.UIElements.Main=e("Frame",{
     Size=UDim2.new(0, 0, 0, 0),
     Position=p.Position,
@@ -6281,6 +6291,13 @@ function a.E()
   end
 end
 if not w and p.IsOpenButtonEnabled then
+  b.AddSignal(p.UIElements.XFC.MouseButton1Click, function()
+    if p.UIElements.Main.Visible == true then
+      p:Close()
+    else
+      p:Open()
+    end
+  end)
   b.AddSignal(y.TextButton.MouseButton1Click,function()
     x.Visible=false
     p:Open()
