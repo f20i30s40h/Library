@@ -10035,7 +10035,7 @@ local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}
         })
       })
     })
-  ai.AddSignal(aj.RenderStepped, function()
+  ai.AddSignal(game:GetService"RunService".RenderStepped, function()
     local time = tick() * 1
     ar.UIElements.Main.UIStroke.UIGradient.Color=ColorSequence.new({
       ColorSequenceKeypoint.new(0, Color3.fromHSV(time % 1, 1, 1)),
